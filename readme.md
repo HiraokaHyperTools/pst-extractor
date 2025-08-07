@@ -8,6 +8,14 @@ This is a private fork of https://github.com/epfromer/pst-extractor repository.
 
 Links: [typedoc](https://hiraokahypertools.github.io/pst-extractor/typedoc/), [online demo](https://hiraokahypertools.github.io/pst-extractor-demo/)
 
+## Install
+
+```npm install --save @hiraokahypertools/pst-extractor```
+
+or
+
+```yarn add @hiraokahypertools/pst-extractor```
+
 ## Open .PST (.OST) file on Node.js
 
 ```ts
