@@ -16,3 +16,4 @@ export { ReadFileApi, ReadFile, Close, } from './PLUtil'
 export { FasterEmail } from './FasterEmail'
 export { PrimitiveTypeConverter, PrimitiveTypeConverterArg } from './PropertyValueResolverV1'
 export { PHNodeHeapReader } from './PHNodeHeapReader'
+export { Consts } from './Consts';

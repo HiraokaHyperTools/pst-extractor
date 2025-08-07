@@ -173,6 +173,14 @@ export class PSTAttachment extends PSTObject {
   /**
    * Contains a MAPI-defined constant representing the way the contents of an attachment can be accessed.
    * https://msdn.microsoft.com/en-us/library/office/cc815439.aspx
+   * 
+   * - {@link PSTAttachment.ATTACHMENT_METHOD_BY_VALUE} (1)
+   * - {@link PSTAttachment.ATTACHMENT_METHOD_BY_REFERENCE} (2)
+   * - {@link PSTAttachment.ATTACHMENT_METHOD_BY_REFERENCE_RESOLVE} (3)
+   * - {@link PSTAttachment.ATTACHMENT_METHOD_BY_REFERENCE_ONLY} (4)
+   * - {@link PSTAttachment.ATTACHMENT_METHOD_EMBEDDED} (5)
+   * - {@link PSTAttachment.ATTACHMENT_METHOD_OLE} (6)
+   *
    * @readonly
    * @type {number}
    * @memberof PSTAttachment

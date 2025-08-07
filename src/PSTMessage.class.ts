@@ -300,6 +300,12 @@ export class PSTMessage extends PSTObject {
   /**
    * Contains the recipient type for a message recipient.
    * https://msdn.microsoft.com/en-us/library/office/cc839620.aspx
+   *
+   * - {@link Consts.MAPI_ORIG} (0)
+   * - {@link Consts.MAPI_TO} (1)
+   * - {@link Consts.MAPI_CC} (2)
+   * - {@link Consts.MAPI_BCC} (3)
+   *
    * @readonly
    * @type {number}
    * @memberof PSTMessage

@@ -6,7 +6,7 @@ Extract objects from MS Outlook/Exchange PST files
 
 This is a private fork of https://github.com/epfromer/pst-extractor repository.
 
-Links: [typedoc](https://hiraokahypertools.github.io/pst-extractor/typedoc/)
+Links: [typedoc](https://hiraokahypertools.github.io/pst-extractor/typedoc/), [online demo](https://hiraokahypertools.github.io/pst-extractor-demo/)
 
 ## Authors
 
