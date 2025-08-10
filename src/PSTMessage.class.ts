@@ -1283,7 +1283,7 @@ export class PSTMessage extends PSTObject {
               const length = end - start
               const buf: Buffer = Buffer.alloc(length)
               PSTUtil.arraycopy(dataBuffer, start, buf, 0, length)
-              const name: string = Buffer.from(buf).toString()
+              const name: string = buf.toString()
               categories[x] = name
             }
             const start = offsets[offsets.length - 1]
@@ -1291,7 +1291,7 @@ export class PSTMessage extends PSTObject {
             const length = end - start
             const buf: Buffer = Buffer.alloc(length)
             PSTUtil.arraycopy(dataBuffer, start, buf, 0, length)
-            const name: string = Buffer.from(buf).toString()
+            const name: string = buf.toString()
             categories[categories.length - 1] = name
           }
         }
