@@ -15,6 +15,7 @@ import { PSTMessage } from './PSTMessage.class'
 import { PropertyValueResolver } from './PropertyValueResolver'
 import { PLSubNode } from './PLSubNode'
 import { RootProvider } from './RootProvider'
+import { createPUNodeFrom, PUNode } from './PUNode'
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 
 export class PSTFile {
@@ -263,6 +264,18 @@ export class PSTFile {
       getItemOf: this.getItemOf.bind(this),
       getFolderOf: this.getFolderOf.bind(this),
     } as RootProvider
+  }
+
+  /**
+   * Requests access to the user node of the internal PST structure.
+   * 
+   * - `NID_MESSAGE_STORE` 33
+   * - `NID_NAME_TO_ID_MAP` 97
+   * - `ROOT_FOLDER_DESCRIPTOR_IDENTIFIER` 290 (unsafe)
+   */
+  public async requestAccessToUserNode(nodeId: number): Promise<PUNode | undefined> {
+    const node = this._store.getOneNodeBy(nodeId);
+    return node ? createPUNodeFrom(node) : undefined;
   }
 
 
