@@ -202,6 +202,6 @@ it('access to PUSubNode', async () => {
   const userSubNode = (await msg.requestAccessToUserSubNode())!
   {
     const pc = await userSubNode.extractAsPropertyContext()
-    expect(pc.length).toBe(45)
+    expect(pc.properties.length).toBe(45)
   }
 })

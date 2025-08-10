@@ -17,3 +17,8 @@ export { FasterEmail } from './FasterEmail'
 export { PrimitiveTypeConverter, PrimitiveTypeConverterArg } from './PropertyValueResolverV1'
 export { PHNodeHeapReader } from './PHNodeHeapReader'
 export { Consts } from './Consts';
+export { PUSubNode } from './PUSubNode';
+export { PUNode } from './PUNode';
+export { RawProperty } from './RawProperty';
+export { PUTableContext } from './PUTableContext';
+export { PUPropertyContext } from './PUPropertyContext';

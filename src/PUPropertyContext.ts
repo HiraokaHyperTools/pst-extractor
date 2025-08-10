@@ -1,7 +1,6 @@
 import { RawProperty } from "./RawProperty";
 
-export interface PUTableContext {
-  numRows: number;
-  getRow(index: number): Promise<RawProperty[]>;
+export interface PUPropertyContext {
+  properties: RawProperty[];
   resolveHeap: (heap: number) => Promise<ArrayBuffer | undefined>;
 }

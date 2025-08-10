@@ -2,6 +2,7 @@ import { PHNodeHeapReader } from "./PHNodeHeapReader";
 import { getHeapFrom } from "./PHUtil";
 import { PLSubNode } from "./PLSubNode";
 import { getPropertyContext } from "./PropertyContextUtil";
+import { PUPropertyContext } from "./PUPropertyContext";
 import { PUTableContext } from "./PUTableContext";
 import { RawProperty } from "./RawProperty";
 import { getTableContext } from "./TableContextUtil";
@@ -30,7 +31,7 @@ export interface PUSubNode {
   /**
    * Extracts this sub-node as a property context.
    */
-  extractAsPropertyContext(): Promise<RawProperty[]>;
+  extractAsPropertyContext(): Promise<PUPropertyContext>;
 }
 
 const passThruResolver = {
@@ -38,6 +39,38 @@ const passThruResolver = {
     return value;
   },
 };
+
+function mixIntoOne(array: ArrayBuffer[]): ArrayBuffer {
+  if (array.length === 0) {
+    return new ArrayBuffer(0);
+  }
+  else if (array.length === 1) {
+    return array[0];
+  }
+  else {
+    const numBytes = array.reduce((prev, it) => prev + it.byteLength, 0);
+    const one = new ArrayBuffer(numBytes);
+    const dest = new Uint8Array(one);
+    array.reduce(
+      (nextPos, source) => {
+        dest.set(new Uint8Array(source), nextPos);
+        return nextPos + source.byteLength;
+      },
+      0
+    );
+    return one;
+  }
+}
+
+type ResolveHeap = (hnid: number) => Promise<ArrayBuffer | undefined>;
+
+function createResolveHeap(heap: PHNodeHeapReader): ResolveHeap {
+  return async (hnid: number) => {
+    return mixIntoOne(
+      await heap.getHeapBuffers(hnid)
+    );
+  };
+}
 
 /**
  * Creates a new PUSubNode instance.
@@ -60,6 +93,7 @@ export function createPUSubNodeFrom(subNode: PLSubNode): PUSubNode {
       const rows = await tc.rows();
 
       return {
+        resolveHeap: createResolveHeap(heap.getReader()),
         numRows: rows.length,
         getRow: async (index: number): Promise<RawProperty[]> => {
           return await rows[index].listRaw();
@@ -74,7 +108,10 @@ export function createPUSubNodeFrom(subNode: PLSubNode): PUSubNode {
         passThruResolver
       );
 
-      return await pc.listRaw();
+      return {
+        resolveHeap: createResolveHeap(heap.getReader()),
+        properties: await pc.listRaw(),
+      };
     },
   };
 }
