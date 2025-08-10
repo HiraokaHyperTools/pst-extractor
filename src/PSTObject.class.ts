@@ -224,6 +224,15 @@ export abstract class PSTObject {
   }
 
   /**
+   * Get all properties.
+   * 
+   * @returns All properties.
+   */
+  getAllProperties(): Property[] {
+    return this._propertyFinder.all();
+  }
+
+  /**
    * JSON the object.
    * @returns {string}
    * @memberof PSTObject

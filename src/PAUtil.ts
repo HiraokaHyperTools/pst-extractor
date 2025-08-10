@@ -13,6 +13,7 @@ import { PSTUtil } from "./PSTUtil.class";
 
 export interface PropertyFinder {
   findByKey(key: number): Property | undefined;
+  all(): Property[];
 }
 
 const guidMap: Map<string, number> = new Map([
@@ -160,5 +161,8 @@ export function createPropertyFinder(props: Property[]): PropertyFinder {
     findByKey(key) {
       return props.find(it => it.key === key);
     },
+    all() {
+      return props;
+    }
   } as PropertyFinder;
 }
