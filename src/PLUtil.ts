@@ -122,7 +122,7 @@ async function willUnzip1(data: ArrayBuffer): Promise<ArrayBuffer> {
     const view = new DataView(data);
     if (view.getUint16(0, true) === 0x9c78) {
       const inflated = inflate(data);
-      return inflated.buffer;
+      return inflated.buffer as ArrayBuffer;
     }
   }
 
