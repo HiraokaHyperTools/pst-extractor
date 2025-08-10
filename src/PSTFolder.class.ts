@@ -15,6 +15,7 @@ import { RootProvider } from './RootProvider'
 import { FasterEmail } from './FasterEmail'
 import { getPropertyContext } from './PropertyContextUtil'
 import { PropertyValueResolver } from './PropertyValueResolver'
+import { createPUNodeFrom, PUNode } from './PUNode'
 
 export interface GetFasterEmailListOptions {
   progress?: (current: number, count: number) => void;
@@ -148,8 +149,7 @@ export class PSTFolder extends PSTObject {
             }
             return await this._rootProvider.getItemOf(
               targets[index].node,
-              targets[index].node.getSubNode(),
-              undefined // targets[index].propertyFinder
+              targets[index].node.getSubNode()
             );
 
             // Some important properties are not provided thru table context, like:
@@ -297,8 +297,7 @@ export class PSTFolder extends PSTObject {
               async getMessage() {
                 return await rootProvider.getItemOf(
                   node,
-                  node.getSubNode(),
-                  undefined
+                  node.getSubNode()
                 );
               }
             }
@@ -378,6 +377,13 @@ export class PSTFolder extends PSTObject {
    */
   public get containerFlags(): number {
     return this.getIntItem(OutlookProperties.PR_CONTAINER_FLAGS)
+  }
+
+  /**
+   * Requests access to the user node of the internal PST structure.
+   */
+  public async requestAccessToUserNode(): Promise<PUNode | undefined> {
+    return createPUNodeFrom(this._node);
   }
 
   /**

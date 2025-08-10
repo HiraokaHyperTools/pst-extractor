@@ -14,6 +14,7 @@ import { PropertyValueResolver } from './PropertyValueResolver'
 import { createPropertyFinder, PropertyFinder } from './PAUtil'
 import { PLSubNode } from './PLSubNode'
 import { RootProvider } from './RootProvider'
+import { RawProperty } from './RawProperty'
 
 /**
  * Utility functions for PST components
@@ -719,20 +720,15 @@ export class PSTUtil {
     rootProvider: RootProvider,
     node: PLNode,
     subNode: PLSubNode,
-    resolver: PropertyValueResolver,
-    propertyFinderDelegation: PropertyFinder | undefined,
+    resolver: PropertyValueResolver
   ): Promise<PSTMessage> {
-    if (propertyFinderDelegation === undefined) {
-      const heap = await getHeapFrom(subNode);
-      const pc = await getPropertyContext(
-        heap,
-        resolver
-      );
-      const propList = await pc.list();
-      propertyFinderDelegation = createPropertyFinder(propList);
-    }
-
-    const propertyFinder = propertyFinderDelegation;
+    const heap = await getHeapFrom(subNode);
+    const pc = await getPropertyContext(
+      heap,
+      resolver
+    );
+    const propList = await pc.list();
+    const propertyFinder = createPropertyFinder(propList);
 
     const item = propertyFinder.findByKey(0x001a);
     let messageClass = ''
@@ -779,7 +775,7 @@ export class PSTUtil {
           rootProvider,
           node,
           subNode,
-          propertyFinder
+          propertyFinder          
         );
         // Log.debug1(JSON.stringify(msg, null, 2));
         return contact;
@@ -789,7 +785,7 @@ export class PSTUtil {
           rootProvider,
           node,
           subNode,
-          propertyFinder
+          propertyFinder          
         );
         // Log.debug1(JSON.stringify(msg, null, 2));
         return task;

@@ -1,6 +1,7 @@
 import { openPstFile } from '../openPstFile'
 import { PSTFile } from '../PSTFile.class'
 import { PSTFolder } from '../PSTFolder.class'
+import { PSTUtil } from '../PSTUtil.class'
 const resolve = require('path').resolve
 let pstFile: PSTFile
 
@@ -69,5 +70,34 @@ describe('PSTFolder tests', () => {
     await folder.getEmail(0)
     expect((async () => { await folder.getEmail(1) })()).rejects.toThrow(RangeError)
     expect((async () => { await folder.getEmail(100) })()).rejects.toThrow(RangeError)
+  })
+
+  it('access to PUNode', async () => {
+    const rootFolder = await pstFile.getRootFolder();
+
+    const userNode = (await rootFolder.requestAccessToUserNode())
+    expect(userNode!.nodeId).toBe(290)
+    {
+      const contentsTableNode = (await userNode!.getSiblingNode(PSTUtil.NID_TYPE_CONTENTS_TABLE))!;
+      const subNode = await contentsTableNode.getSubNode();
+      const tc = await subNode.extractAsTableContext();
+      expect(tc.numRows).toBe(0)
+    }
+    {
+      const parent = await userNode!.getParent();
+      expect(parent!.nodeId).toBe(290)
+
+      {
+        const parent2 = await parent!.getParent();
+        expect(parent2!.nodeId).toBe(290)
+      }
+    }
+    {
+      const children = await userNode!.getChildren();
+      expect(children.length).toBe(3)
+      expect(children[0].nodeId).toBe(8739)
+      expect(children[1].nodeId).toBe(32802)
+      expect(children[2].nodeId).toBe(32834)
+    }
   })
 })

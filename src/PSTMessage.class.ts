@@ -16,6 +16,7 @@ import { PLSubNode } from './PLSubNode'
 import { SingleAsyncProvider } from './SingleAsyncProvider'
 import { CollectionAsyncProvider } from './CollectionAsyncProvider'
 import { RootProvider } from './RootProvider'
+import { createPUSubNodeFrom, PUSubNode } from './PUSubNode'
 
 enum PidTagMessageFlags {
   MSGFLAG_READ = 0x01,
@@ -1383,6 +1384,13 @@ export class PSTMessage extends PSTObject {
    */
   public get modificationTime(): Date | null {
     return this.getDateItem(OutlookProperties.PR_LAST_MODIFICATION_TIME)
+  }
+
+  /**
+   * Requests access to the user sub-node of the internal PST structure.
+   */
+  public async requestAccessToUserSubNode(): Promise<PUSubNode | undefined> {
+    return createPUSubNodeFrom(this._subNode);
   }
 
   /**

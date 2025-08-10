@@ -192,3 +192,16 @@ describe('PSTMessage tests', () => {
     )
   })
 })
+
+it('access to PUSubNode', async () => {
+  expect(childFolders[0].displayName).toEqual('TW-Commercial Group')
+  const comGroupFolder = childFolders[0]
+
+  const msg: PSTMessage = (await comGroupFolder.getEmail(0))
+
+  const userSubNode = (await msg.requestAccessToUserSubNode())!
+  {
+    const pc = await userSubNode.extractAsPropertyContext()
+    expect(pc.length).toBe(45)
+  }
+})

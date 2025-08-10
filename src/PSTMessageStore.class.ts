@@ -3,6 +3,7 @@ import { PLNode } from './PLNode'
 import { PLSubNode } from './PLSubNode'
 import { PSTFile } from './PSTFile.class'
 import { PSTObject } from './PSTObject.class'
+import { createPUNodeFrom, PUNode } from './PUNode'
 import { RootProvider } from './RootProvider'
 
 export class PSTMessageStore extends PSTObject {
@@ -21,5 +22,12 @@ export class PSTMessageStore extends PSTObject {
     propertyFinder: PropertyFinder
   ) {
     super(rootProvider, node, subNode, propertyFinder)
+  }
+
+  /**
+   * Requests access to the user node of the internal PST structure.
+   */
+  public async requestAccessToUserNode(): Promise<PUNode | undefined> {
+    return createPUNodeFrom(this._node);
   }
 }
