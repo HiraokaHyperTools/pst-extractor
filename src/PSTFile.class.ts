@@ -278,6 +278,13 @@ export class PSTFile {
     return node ? createPUNodeFrom(node) : undefined;
   }
 
+  /**
+   * Get the store support mask should be set to `PidTagStoreSupportMask`.
+   */
+  public getStoreSupportMask(): number | undefined {
+    return this._store.storeSupportMask;
+  }
+
 
   /**
    * JSON stringify the object properties.

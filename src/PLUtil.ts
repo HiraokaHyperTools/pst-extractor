@@ -78,6 +78,13 @@ interface StoreTrait {
   BlockSize: number;
   unzipHook: UnzipHook;
   is4K: boolean;
+  /**
+   * Used when exporting a message to msg file.
+   * 
+   * - Setting this value to `PidTagStoreSupportMask`.
+   * - Set `undefined` if `PidTagStoreSupportMask` should not be emitted.
+   */
+  storeSupportMask: number | undefined;
 }
 
 /**
@@ -428,6 +435,7 @@ const ver0x0e: StoreTrait = {
   readXXBlock: ptr32.readXXBlock,
   unzipHook: passThru1,
   is4K: false,
+  storeSupportMask: undefined,
 };
 
 const ver0x17: StoreTrait = {
@@ -453,6 +461,10 @@ const ver0x17: StoreTrait = {
   readXXBlock: ptr64.readXXBlock,
   unzipHook: passThru1,
   is4K: false,
+  /**
+   * STORE_ENTRYID_UNIQUE | STORE_MODIFY_OK | STORE_CREATE_OK | STORE_ATTACH_OK | STORE_OLE_OK | STORE_MV_PROPS_OK | STORE_CATEGORIZE_OK | STORE_RTF_OK | STORE_UNICODE_OK
+   */
+  storeSupportMask: 0x40E79,
 };
 
 const ver0x24: StoreTrait = {
@@ -478,6 +490,10 @@ const ver0x24: StoreTrait = {
   readXXBlock: ptr64.readXXBlock,
   unzipHook: willUnzip1,
   is4K: true,
+  /**
+   * STORE_ENTRYID_UNIQUE | STORE_MODIFY_OK | STORE_CREATE_OK | STORE_ATTACH_OK | STORE_OLE_OK | STORE_MV_PROPS_OK | STORE_CATEGORIZE_OK | STORE_RTF_OK | STORE_UNICODE_OK
+   */
+  storeSupportMask: 0x40E79,
 };
 
 interface SIBlockEntry {
@@ -956,5 +972,6 @@ export async function openLowPst(api: ReadFileApi): Promise<PLStore> {
     getOneNodeBy,
     getOneNodeByOrError,
     close: () => api.close(),
+    storeSupportMask: trait.storeSupportMask,
   } as PLStore;
 }
