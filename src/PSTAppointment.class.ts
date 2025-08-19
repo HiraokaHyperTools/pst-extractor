@@ -568,6 +568,7 @@ export class PSTAppointment extends PSTMessage {
         isSilent: this.isSilent,
         requiredAttendees: this.requiredAttendees,
         localeId: this.localeId,
+        primaryNodeId: this.primaryNodeId,
       },
       this
     )

@@ -1486,6 +1486,7 @@ export class PSTMessage extends PSTObject {
         colorCategories: this.colorCategories,
         conversationId: this.conversationId,
         isConversationIndexTracking: this.isConversationIndexTracking,
+        primaryNodeId: this.primaryNodeId,
       },
       this
     )

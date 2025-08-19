@@ -400,6 +400,7 @@ export class PSTFolder extends PSTObject {
         hasSubfolders: this.hasSubfolders,
         containerClass: this.containerClass,
         containerFlags: this.containerFlags,
+        primaryNodeId: this.primaryNodeId,
       },
       this
     )

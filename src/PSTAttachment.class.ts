@@ -323,6 +323,7 @@ export class PSTAttachment extends PSTObject {
         contentId: this.contentId,
         isAttachmentInvisibleInHtml: this.isAttachmentInvisibleInHtml,
         isAttachmentInvisibleInRTF: this.isAttachmentInvisibleInRTF,
+        primaryNodeId: this.primaryNodeId,
       },
       this
     )

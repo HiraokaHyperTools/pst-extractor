@@ -208,6 +208,7 @@ export class PSTActivity extends PSTMessage {
         isDocumentRouted: this.isDocumentRouted,
         isDocumentPosted: this.isDocumentPosted,
         logTypeDesc: this.logTypeDesc,
+        primaryNodeId: this.primaryNodeId,
       },
       this
     )

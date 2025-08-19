@@ -257,6 +257,19 @@ export class PSTFile {
     return await this.getFolderOf(node);
   }
 
+  /**
+   * Get the `Top of Outlook data file` of the PST file
+   * @returns {PSTFolder}
+   * @memberof PSTFile
+   */
+  public async getTopOfOutlookDataFile(): Promise<PSTFolder> {
+    const node = this._store.getOneNodeBy(32802);
+    if (node === undefined) {
+      throw new Error("Top of Outlook data file not found");
+    }
+    return await this.getFolderOf(node);
+  }
+
   private getRootProvider(): RootProvider {
     return {
       resolver: this._resolver,

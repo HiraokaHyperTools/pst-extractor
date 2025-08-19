@@ -233,6 +233,13 @@ export abstract class PSTObject {
   }
 
   /**
+   * Get the primary node ID.
+   */
+  public get primaryNodeId(): number {
+    return this._node.nodeId;
+  }
+
+  /**
    * JSON the object.
    * @returns {string}
    * @memberof PSTObject

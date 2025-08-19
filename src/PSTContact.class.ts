@@ -1416,6 +1416,7 @@ export class PSTContact extends PSTMessage {
         yomiLastName: this.yomiLastName,
         yomiFirstName: this.yomiFirstName,
         yomiCompanyName: this.yomiCompanyName,
+        primaryNodeId: this.primaryNodeId,
       },
       this
     )
