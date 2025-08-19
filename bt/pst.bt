@@ -1,0 +1,195 @@
+//------------------------------------------------
+//--- 010 Editor v11.0.1 Binary Template
+//
+//      File: Outlook PST file
+//   Authors: kenjiuno
+//   Version: 0.1.0
+//   Purpose: Analyzes
+//  Category: Database
+// File Mask: *.pst
+//  ID Bytes: 21 42 44 4E
+//   History: 
+//------------------------------------------------
+
+LittleEndian();
+
+struct BREF {
+ uint64 bid;
+ uint64 ib;
+};
+
+struct Root {
+ uint dwReserved;
+ uint64 ibFileEof;
+ uint64 ibAMapLast;
+ uint64 cbAMapFree;
+ uint64 cbPMapFree;
+ BREF BREFNBT;
+ BREF BREFBBT;
+ ubyte fAMapValid;
+ ubyte bReserved;
+ ushort wReserved;
+};
+
+struct Header {
+ uint dwMagic;
+ uint dwCRCPartial;
+ ushort wMagicClient;
+ ushort wVer;
+ ushort wVerClient;
+ ubyte bPlatformCreate;
+ ubyte bPlatformAccess;
+ uint dwReserved1;
+ uint dwReserved2;
+ uint64 bidUnused;
+ uint64 bidNextP;
+ uint dwUnique;
+ uint rgnid[32];
+ uint64 qwUnused;
+ Root root;
+ uint dwAlign;
+ ubyte rgbFM[128];
+ ubyte rgbFP[128];
+ ubyte bSentinel;
+ ubyte bCryptMethod;
+ ushort rgbReserved;
+ uint64 bidNextB;
+ uint dwCRCFull;
+ ubyte rgbReserved2[3];
+ ubyte bReserved;
+ ubyte rgbReserved3[32];
+};
+
+struct BLOCKTRAILER {
+ ushort cb;
+ ushort wSig;
+ uint dwCRC;
+ uint64 bid;
+};
+
+struct PAGETRAILER {
+ ubyte ptype;
+ ubyte ptypeRepeat;
+ ushort wSig;
+ uint dwCRC;
+ uint64 bid;
+};
+
+struct BTENTRY {
+ uint64 btkey;
+ BREF bref;
+};
+
+struct BTPAGE_BT {
+ BTENTRY e[20];
+ ubyte dummy[8];
+ ubyte cEnt;
+ ubyte cEntMax;
+ ubyte cbEnt;
+ ubyte cLevel;
+ uint dwPadding;
+ PAGETRAILER t;
+};
+
+struct BBTENTRY {
+ BREF bref;
+ ushort cb;
+ ushort cRef;
+ uint dwPadding;
+};
+
+struct BTPAGE_BBT_BBT {
+ BBTENTRY e[20];
+ ubyte dummy[8];
+ ubyte cEnt;
+ ubyte cEntMax;
+ ubyte cbEnt;
+ ubyte cLevel;
+ uint dwPadding;
+ PAGETRAILER t;
+};
+
+struct NBTENTRY {
+ uint64 nid;
+ uint64 bidData;
+ uint64 bidSub;
+ uint nidParent;
+ uint dwPadding;
+};
+
+struct BTPAGE_NBT_NBT {
+ NBTENTRY e[15];
+ ubyte dummy[8];
+ ubyte cEnt;
+ ubyte cEntMax;
+ ubyte cbEnt;
+ ubyte cLevel;
+ uint dwPadding;
+ PAGETRAILER t;
+};
+
+struct Data (uint len) {
+ ubyte data[len];
+};
+
+Header header;
+
+void WalkBBT(uint64 ib) {
+ local ubyte cLevel = ReadUByte(ib + 0x1EB);
+ FSeek(ib);
+ local int y;
+ local uint64 ib2;
+ if (cLevel == 0) {
+  BTPAGE_BBT_BBT bbt_bbt;
+  for (y=0; y<bbt_bt.cEnt; y++) {
+   FSeek(bbt_bbt.e[y].bref.ib);
+   Data data(bbt_bbt.e[y].cb);
+  }
+ }
+ else {
+  BTPAGE_BT bbt_bt <optimize=false>;
+  local uint64 pos[20];
+  for (y=0; y<bbt_bt.cEnt; y++) {
+   pos[y] =  bbt_bt.e[y].bref.ib;
+  }
+  for (y=0; y<bbt_bt.cEnt; y++) {
+   if (pos[y] != 0) {
+    WalkBBT(pos[y]);
+   }
+  }
+ }
+}
+
+if (header.root.BREFBBT.ib != 0) {
+ // BBT
+ WalkBBT(header.root.BREFBBT.ib);
+}
+
+void WalkNBT(uint64 ib) {
+ local ubyte cLevel = ReadUByte(ib + 0x1EB);
+ local ubyte ptype = ReadUByte(ib + 0x1F0);
+ FSeek(ib);
+ local int y;
+ local uint64 ib2;
+ if (cLevel == 0) {
+  BTPAGE_NBT_NBT nbt_nbt <optimize=false>;
+ }
+ else {
+  BTPAGE_BT nbt_bt;
+  local uint64 pos[20];
+  for (y=0; y<bbt_bt.cEnt; y++) {
+   pos[y] =  nbt_bt.e[y].bref.ib;
+  }
+  for (y=0; y<bbt_bt.cEnt; y++) {
+   ib2 = pos[y];
+   if (ib2 != 0) {
+    WalkNBT(ib2);
+   }
+  }
+ }
+}
+
+if (header.root.BREFNBT.ib != 0) {
+ // NBT
+ WalkNBT(header.root.BREFNBT.ib);
+}
