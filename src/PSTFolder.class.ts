@@ -294,6 +294,7 @@ export class PSTFolder extends PSTObject {
             {
               displayName: getValueOfAny([OutlookProperties.PR_SUBJECT, OutlookProperties.PR_DISPLAY_NAME]),
               messageClass: getValueOfAny([OutlookProperties.PR_MESSAGE_CLASS]),
+              primaryNodeId: node.nodeId,
               async getMessage() {
                 return await rootProvider.getItemOf(
                   node,
