@@ -2,9 +2,9 @@
  * PST higher level utilities
  */
 
-import { PHNodeHeap } from "./PHNodeHeap";
-import { PHNodeHeapReader } from "./PHNodeHeapReader";
-import { PLSubNode } from "./PLSubNode";
+import type { PHNodeHeap } from "./PHNodeHeap.js";
+import type { PHNodeHeapReader } from "./PHNodeHeapReader.js";
+import type { PLSubNode } from "./PLSubNode.js";
 
 export async function getHeapFrom(node: PLSubNode): Promise<PHNodeHeap> {
   const data_array = await node.getData();

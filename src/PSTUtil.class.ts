@@ -1,20 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Long from 'long'
-import { PSTAppointment } from './PSTAppointment.class'
-import { PSTContact } from './PSTContact.class'
-import { PSTFile } from './PSTFile.class'
-import { PSTMessage } from './PSTMessage.class'
-import { PSTTask } from './PSTTask.class'
-import { PSTActivity } from './PSTActivity.class'
-import iconv from 'iconv-lite'
-import { PLNode } from './PLNode'
-import { getHeapFrom } from './PHUtil'
-import { getPropertyContext } from './PropertyContextUtil'
-import { PropertyValueResolver } from './PropertyValueResolver'
-import { createPropertyFinder, PropertyFinder } from './PAUtil'
-import { PLSubNode } from './PLSubNode'
-import { RootProvider } from './RootProvider'
-import { RawProperty } from './RawProperty'
+import Long from 'long';
+import { PSTAppointment } from './PSTAppointment.class.js';
+import { PSTContact } from './PSTContact.class.js';
+import { PSTMessage } from './PSTMessage.class.js';
+import { PSTTask } from './PSTTask.class.js';
+import { PSTActivity } from './PSTActivity.class.js';
+import type { PLNode } from './PLNode.js';
+import { getHeapFrom } from './PHUtil.js';
+import { getPropertyContext } from './PropertyContextUtil.js';
+import type { PropertyValueResolver } from './PropertyValueResolver.js';
+import { createPropertyFinder } from './PAUtil.js';
+import type { PLSubNode } from './PLSubNode.js';
+import type { RootProvider } from './RootProvider.js';
 
 /**
  * Utility functions for PST components
@@ -605,37 +602,6 @@ export class PSTUtil {
   }
 
   /**
-   * Create JS string from buffer.
-   * @static
-   * @param {Buffer} data
-   * @param {number} stringType
-   * @param {string} codepage
-   * @returns
-   * @memberof PSTUtil
-   */
-  public static createJavascriptString(
-    data: Buffer,
-    stringType: number,
-    codepage: string = 'utf8'
-  ): string {
-    // TODO - codepage is not used...
-    try {
-      if (stringType == 0x1f) {
-        // convert and trim any nulls
-        return data.toString('utf16le').replace(/\0/g, '')
-      } else {
-        return iconv.decode(data, codepage).toString()
-      }
-    } catch (err) {
-      console.error(
-        'PSTUtil::createJavascriptString Unable to decode string\n' + err
-      )
-      throw err
-    }
-    return ''
-  }
-
-  /**
    * Copy from one array to another
    * @static
    * @param {Buffer} src
@@ -768,27 +734,27 @@ export class PSTUtil {
           propertyFinder
         );
         // Log.debug1(JSON.stringify(msg, null, 2));
-        return apt;
+        return apt as unknown as PSTMessage;
       case 'IPM.Contact':
         // contact
         const contact = new PSTContact(
           rootProvider,
           node,
           subNode,
-          propertyFinder          
+          propertyFinder
         );
         // Log.debug1(JSON.stringify(msg, null, 2));
-        return contact;
+        return contact as unknown as PSTMessage;
       case 'IPM.Task':
         // task
         const task = new PSTTask(
           rootProvider,
           node,
           subNode,
-          propertyFinder          
+          propertyFinder
         );
         // Log.debug1(JSON.stringify(msg, null, 2));
-        return task;
+        return task as unknown as PSTMessage;
       case 'IPM.Activity':
         // journal entry
         const activity = new PSTActivity(
@@ -798,7 +764,7 @@ export class PSTUtil {
           propertyFinder
         );
         // Log.debug1(JSON.stringify(msg, null, 2));
-        return activity;
+        return activity as unknown as PSTMessage;
       case 'IPM.Post.Rss':
         // debugger;
         // Rss Feed
@@ -936,5 +902,12 @@ export class PSTUtil {
     const epochDiff: Long = Long.fromValue('11644473600000')
     const msSince19700101: Long = msSince16010101.subtract(epochDiff)
     return new Date(msSince19700101.toNumber())
+  }
+
+  public static createConvertAnsiString(encoding: string): ((data: Uint8Array) => Promise<string>) {
+    const decoder = new TextDecoder(encoding);
+    return async (data: Uint8Array): Promise<string> => {
+      return decoder.decode(data);
+    }
   }
 }

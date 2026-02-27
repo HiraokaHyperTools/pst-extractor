@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Long from 'long'
+import Long from 'long';
 
 /**
  * Stores node names (both alpha and numeric) in node maps for quick lookup.

@@ -1,9 +1,9 @@
-import { BTHeapEntry, getBTHeapReaderFrom } from "./BTHeap";
-import { PHNodeHeap } from "./PHNodeHeap";
-import { Property } from "./Property";
-import { PropertyContext } from "./PropertyContext";
-import { PropertyValueResolver } from "./PropertyValueResolver";
-import { RawProperty } from "./RawProperty";
+import { type BTHeapEntry, getBTHeapReaderFrom } from "./BTHeap.js";
+import type { PHNodeHeap } from "./PHNodeHeap.js";
+import type { Property } from "./Property.js";
+import type { PropertyContext } from "./PropertyContext.js";
+import type { PropertyValueResolver } from "./PropertyValueResolver.js";
+import type { RawProperty } from "./RawProperty.js";
 
 const bTypePC = 0xBC;
 

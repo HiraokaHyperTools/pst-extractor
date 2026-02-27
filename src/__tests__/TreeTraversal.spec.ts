@@ -1,6 +1,6 @@
-import { PSTFile } from '../PSTFile.class'
-import { PSTFolder } from '../PSTFolder.class'
-import { openPstFile } from '../openPstFile'
+import { PSTFile } from '../PSTFile.class.js';
+import { PSTFolder } from '../PSTFolder.class.js';
+import { openPstFile } from '../openPstFile.js';
 import { resolve, extname } from 'path';
 import fs from 'fs';
 

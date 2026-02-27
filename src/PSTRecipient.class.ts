@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { OutlookProperties } from './OutlookProperties'
-import { PropertyFinder } from './PAUtil';
-import { PLNode } from './PLNode';
-import { PLSubNode } from './PLSubNode';
-import { PSTObject } from './PSTObject.class'
-import { RootProvider } from './RootProvider';
+import { OutlookProperties } from './OutlookProperties.js';
+import type { PropertyFinder } from './PAUtil.js';
+import type { PLNode } from './PLNode.js';
+import type { PLSubNode } from './PLSubNode.js';
+import { PSTObject } from './PSTObject.class.js';
+import type { RootProvider } from './RootProvider.js';
 
 // Class containing recipient information
 export class PSTRecipient extends PSTObject {

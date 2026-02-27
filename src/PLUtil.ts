@@ -3,10 +3,10 @@
  */
 
 import Long from "long";
-import { PLNode } from "./PLNode";
-import { PLStore } from "./PLStore";
-import { PLSubNode } from "./PLSubNode";
-import { PSTUtil } from "./PSTUtil.class";
+import type { PLNode } from "./PLNode.js";
+import type { PLStore } from "./PLStore.js";
+import type { PLSubNode } from "./PLSubNode.js";
+import { PSTUtil } from "./PSTUtil.class.js";
 import { inflate } from "pako";
 
 export type ReadFile = (

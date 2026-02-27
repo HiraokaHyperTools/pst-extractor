@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { PSTFile } from './PSTFile.class'
-import { PSTMessage } from './PSTMessage.class'
-import { OutlookProperties } from './OutlookProperties'
-import { PLNode } from './PLNode'
-import { PropertyFinder } from './PAUtil'
-import { PLSubNode } from './PLSubNode'
-import { RootProvider } from './RootProvider'
+import { PSTFile } from './PSTFile.class.js';
+import { PSTMessage } from './PSTMessage.class.js';
+import { OutlookProperties } from './OutlookProperties.js';
+import type { PLNode } from './PLNode.js';
+import type { PropertyFinder } from './PAUtil.js';
+import type { PLSubNode } from './PLSubNode.js';
+import type { RootProvider } from './RootProvider.js';
 
 export class PSTActivity extends PSTMessage {
   /**

@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { OutlookProperties } from './OutlookProperties'
-import { PSTMessage } from './PSTMessage.class'
-import { PSTFile } from './PSTFile.class'
-import { RecurrencePattern } from './RecurrencePattern.class'
-import { PLNode } from './PLNode'
-import { PropertyFinder } from './PAUtil'
-import { PLSubNode } from './PLSubNode'
-import { RootProvider } from './RootProvider'
+import { OutlookProperties } from './OutlookProperties.js';
+import { PSTMessage } from './PSTMessage.class.js';
+import { PSTFile } from './PSTFile.class.js';
+import { RecurrencePattern } from './RecurrencePattern.class.js';
+import type { PLNode } from './PLNode.js';
+import type { PropertyFinder } from './PAUtil.js';
+import type { PLSubNode } from './PLSubNode.js';
+import type { RootProvider } from './RootProvider.js';
 
 export class PSTTask extends PSTMessage {
   /**

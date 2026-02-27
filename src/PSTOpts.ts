@@ -1,8 +1,8 @@
-import { PrimitiveTypeConverter } from "./PropertyValueResolverV1";
+import type { PrimitiveTypeConverter } from "./PropertyValueResolverV1.js";
 
 export interface PSTOpts {
   /**
-   * Specify character encoding usable with `iconv-lite` package.
+   * Specify character encoding usable with TextDecoder.
    * 
    * This is used to obtain unicode string from ArrayBuffer of ansiString PT_STRING8.
    * 
@@ -23,7 +23,7 @@ export interface PSTOpts {
   /**
    * Otherwise, you can provide your own converter (from ansiString to unicode string).
    */
-  convertAnsiString?: (arrayBuffer: ArrayBuffer) => Promise<string>;
+  convertAnsiString?: (data: Uint8Array) => Promise<string>;
 
   /**
    * Provide your own optional type converter.

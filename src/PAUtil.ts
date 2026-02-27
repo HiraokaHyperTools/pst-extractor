@@ -2,14 +2,14 @@
  * PST adapter utilities
  */
 
-import { msftUuidStringify } from "./msftUuidStringify";
-import { NodeMap } from "./NodeMap.class"
-import { getHeapFrom } from "./PHUtil";
-import { PLNode } from "./PLNode"
-import { Property } from "./Property";
-import { getPropertyContext } from "./PropertyContextUtil";
-import { PropertyValueResolver } from "./PropertyValueResolver";
-import { PSTUtil } from "./PSTUtil.class";
+import { msftUuidStringify } from "./msftUuidStringify.js";
+import { NodeMap } from "./NodeMap.class.js";
+import { getHeapFrom } from "./PHUtil.js";
+import type { PLNode } from "./PLNode.js";
+import type { Property } from "./Property.js";
+import { getPropertyContext } from "./PropertyContextUtil.js";
+import type { PropertyValueResolver } from "./PropertyValueResolver.js";
+import { PSTUtil } from "./PSTUtil.class.js";
 
 export interface PropertyFinder {
   findByKey(key: number): Property | undefined;

@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { OutlookProperties } from './OutlookProperties'
-import { PropertyFinder } from './PAUtil'
-import { PLNode } from './PLNode'
-import { PLSubNode } from './PLSubNode'
-import { PSTFile } from './PSTFile.class'
-import { PSTMessage } from './PSTMessage.class'
-import { RootProvider } from './RootProvider'
+import { OutlookProperties } from './OutlookProperties.js';
+import type { PropertyFinder } from './PAUtil.js';
+import type { PLNode } from './PLNode.js';
+import type { PLSubNode } from './PLSubNode.js';
+import { PSTFile } from './PSTFile.class.js';
+import { PSTMessage } from './PSTMessage.class.js';
+import type { RootProvider } from './RootProvider.js';
 
 // PSTAppointment is for Calendar items
 export class PSTAppointment extends PSTMessage {

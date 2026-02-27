@@ -1,9 +1,9 @@
-import { openPstFile } from '../openPstFile'
-import { PSTFile } from '../PSTFile.class'
-import { PSTFolder } from '../PSTFolder.class'
-import { PSTMessage } from '../PSTMessage.class'
-import { PSTRecipient } from '../PSTRecipient.class'
-const resolve = require('path').resolve
+import { openPstFile } from '../openPstFile.js';
+import { PSTFile } from '../PSTFile.class.js';
+import { PSTFolder } from '../PSTFolder.class.js';
+import { PSTMessage } from '../PSTMessage.class.js';
+import { PSTRecipient } from '../PSTRecipient.class.js';
+import { resolve } from 'path';
 let pstFile: PSTFile
 
 beforeAll(async () => {

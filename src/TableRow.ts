@@ -1,5 +1,5 @@
-import { Property } from "./Property";
-import { RawProperty } from "./RawProperty";
+import type { Property } from "./Property.js";
+import type { RawProperty } from "./RawProperty.js";
 
 export interface TableRow {
   listRaw(): Promise<RawProperty[]>;

@@ -1,5 +1,5 @@
-import { PLNode } from "./PLNode";
-import { createPUSubNodeFrom, PUSubNode } from "./PUSubNode";
+import type { PLNode } from "./PLNode.js";
+import { createPUSubNodeFrom, type PUSubNode } from "./PUSubNode.js";
 
 /**
  * Represents a node in the PST file structure.

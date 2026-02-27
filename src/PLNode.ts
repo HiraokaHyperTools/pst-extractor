@@ -1,8 +1,7 @@
 /**
  * PST lower level node
  */
-
-import { PLSubNode } from "./PLSubNode";
+import type { PLSubNode } from "./PLSubNode.js";
 
 export interface PLNode {
   nodeId: number;

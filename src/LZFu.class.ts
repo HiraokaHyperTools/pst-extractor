@@ -1,4 +1,4 @@
-import { PSTUtil } from './PSTUtil.class'
+import { PSTUtil } from './PSTUtil.class.js';
 
 // An implementation of the LZFu algorithm to decompress RTF content
 export class LZFu {

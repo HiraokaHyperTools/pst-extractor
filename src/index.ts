@@ -1,24 +1,25 @@
-export { PSTFile } from './PSTFile.class'
-export { PSTTask } from './PSTTask.class'
-export { PSTRecipient } from './PSTRecipient.class'
-export { PSTAttachment } from './PSTAttachment.class'
-export { PSTMessage } from './PSTMessage.class'
-export { PSTFolder, GetFasterEmailListOptions } from './PSTFolder.class'
-export { openPstFile, openPst, } from './openPstFile'
-export { PSTOpts } from './PSTOpts'
-export { PSTContact } from './PSTContact.class'
-export { PSTAppointment } from './PSTAppointment.class'
-export { PSTMessageStore } from './PSTMessageStore.class'
-export { PSTObject } from './PSTObject.class'
-export { Property } from './Property'
-export { PropertyTypeObject } from './PropertyTypeObject'
-export { ReadFileApi, ReadFile, Close, } from './PLUtil'
-export { FasterEmail } from './FasterEmail'
-export { PrimitiveTypeConverter, PrimitiveTypeConverterArg } from './PropertyValueResolverV1'
-export { PHNodeHeapReader } from './PHNodeHeapReader'
-export { Consts } from './Consts';
-export { PUSubNode } from './PUSubNode';
-export { PUNode } from './PUNode';
-export { RawProperty } from './RawProperty';
-export { PUTableContext } from './PUTableContext';
-export { PUPropertyContext } from './PUPropertyContext';
+export { PSTFile } from './PSTFile.class.js';
+export { PSTTask } from './PSTTask.class.js';
+export { PSTRecipient } from './PSTRecipient.class.js';
+export { PSTAttachment } from './PSTAttachment.class.js';
+export { PSTMessage } from './PSTMessage.class.js';
+export { PSTFolder } from './PSTFolder.class.js';
+export type { GetFasterEmailListOptions } from './PSTFolder.class.js';
+export { openPstFile, openPst, } from './openPstFile.js';
+export type { PSTOpts } from './PSTOpts.js';
+export { PSTContact } from './PSTContact.class.js';
+export { PSTAppointment } from './PSTAppointment.class.js';
+export { PSTMessageStore } from './PSTMessageStore.class.js';
+export { PSTObject } from './PSTObject.class.js';
+export type { Property } from './Property.js';
+export { PropertyTypeObject } from './PropertyTypeObject.js';
+export type { ReadFileApi, ReadFile, Close, } from './PLUtil.js';
+export type { FasterEmail } from './FasterEmail.js';
+export type { PrimitiveTypeConverter, PrimitiveTypeConverterArg } from './PropertyValueResolverV1.js';
+export type { PHNodeHeapReader } from './PHNodeHeapReader.js';
+export { Consts } from './Consts.js';
+export type { PUSubNode } from './PUSubNode.js';
+export type { PUNode } from './PUNode.js';
+export type { RawProperty } from './RawProperty.js';
+export type { PUTableContext } from './PUTableContext.js';
+export type { PUPropertyContext } from './PUPropertyContext.js';

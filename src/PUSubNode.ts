@@ -1,11 +1,11 @@
-import { PHNodeHeapReader } from "./PHNodeHeapReader";
-import { getHeapFrom } from "./PHUtil";
-import { PLSubNode } from "./PLSubNode";
-import { getPropertyContext } from "./PropertyContextUtil";
-import { PUPropertyContext } from "./PUPropertyContext";
-import { PUTableContext } from "./PUTableContext";
-import { RawProperty } from "./RawProperty";
-import { getTableContext } from "./TableContextUtil";
+import type { PHNodeHeapReader } from "./PHNodeHeapReader.js";
+import { getHeapFrom } from "./PHUtil.js";
+import type { PLSubNode } from "./PLSubNode.js";
+import { getPropertyContext } from "./PropertyContextUtil.js";
+import type { PUPropertyContext } from "./PUPropertyContext.js";
+import type { PUTableContext } from "./PUTableContext.js";
+import type { RawProperty } from "./RawProperty.js";
+import { getTableContext } from "./TableContextUtil.js";
 
 /**
  * Represents a sub-node within a property structure.

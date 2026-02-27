@@ -1,8 +1,8 @@
-import * as fs from 'fs'
-import { PSTMessage } from '../src/PSTMessage.class'
-import { PSTFile } from '../src/PSTFile.class'
-import { PSTFolder } from '../src/PSTFolder.class'
-const resolve = require('path').resolve
+import * as fs from 'fs';
+import { PSTMessage } from '../src/PSTMessage.class';
+import { PSTFile } from '../src/PSTFile.class';
+import { PSTFolder } from '../src/PSTFolder.class';
+import { resolve } from 'path';
 
 const pstFolder = './testdata/'
 const topOutputFolder = './testdataoutput/'

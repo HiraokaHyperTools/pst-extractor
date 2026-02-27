@@ -1,12 +1,12 @@
 import { copyFile } from "fs";
-import { getBTHeapReaderFrom } from "./BTHeap";
-import { PHNodeHeap } from "./PHNodeHeap";
-import { splitPer } from "./PLMisc";
-import { Property } from "./Property";
-import { PropertyValueResolver } from "./PropertyValueResolver";
-import { RawProperty } from "./RawProperty";
-import { TableContext } from "./TableContext";
-import { TableRow } from "./TableRow";
+import { getBTHeapReaderFrom } from "./BTHeap.js";
+import type { PHNodeHeap } from "./PHNodeHeap.js";
+import { splitPer } from "./PLMisc.js";
+import type { Property } from "./Property.js";
+import type { PropertyValueResolver } from "./PropertyValueResolver.js";
+import type { RawProperty } from "./RawProperty.js";
+import type { TableContext } from "./TableContext.js";
+import type { TableRow } from "./TableRow.js";
 
 const bTypeTC = 0x7c;
 

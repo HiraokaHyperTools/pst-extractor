@@ -1,4 +1,4 @@
-import { RawProperty } from "./RawProperty";
+import type { RawProperty } from "./RawProperty.js";
 
 export interface PUPropertyContext {
   properties: RawProperty[];

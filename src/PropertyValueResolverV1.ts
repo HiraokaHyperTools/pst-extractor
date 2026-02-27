@@ -1,10 +1,10 @@
 import Long from "long";
-import { PHNodeHeapReader } from "./PHNodeHeapReader";
-import { splitPer } from "./PLMisc";
-import { readLong } from "./PLUtil";
-import { PropertyTypeObject } from "./PropertyTypeObject";
-import { PropertyValueResolver } from "./PropertyValueResolver";
-import { PSTUtil } from "./PSTUtil.class";
+import type { PHNodeHeapReader } from "./PHNodeHeapReader.js";
+import { splitPer } from "./PLMisc.js";
+import { readLong } from "./PLUtil.js";
+import { PropertyTypeObject } from "./PropertyTypeObject.js";
+import type { PropertyValueResolver } from "./PropertyValueResolver.js";
+import { PSTUtil } from "./PSTUtil.class.js";
 
 export interface PrimitiveTypeConverterArg {
   /**
@@ -32,7 +32,7 @@ export interface PrimitiveTypeConverterArg {
   /**
    * Convert ansiString to unicode string.
    */
-  convertAnsiString: (array: ArrayBuffer) => Promise<string>;
+  convertAnsiString: (data: Uint8Array) => Promise<string>;
 }
 
 /**
@@ -49,7 +49,7 @@ export interface PrimitiveTypeConverterArg {
  *   const heap = arg.view.getUint32(0, true);
  *   const bytes = await arg.resolveHeap(heap);
  *   return (bytes !== undefined)
- *     ? await arg.convertAnsiString(bytes)
+ *     ? await arg.convertAnsiString(new Uint8Array(bytes))
  *     : undefined;
  * }
  * ```
@@ -127,7 +127,7 @@ typeConverters[PT_STRING8] = async (arg) => {
   const heap = arg.view.getUint32(0, true);
   const bytes = await arg.resolveHeap(heap);
   return (bytes !== undefined)
-    ? await arg.convertAnsiString(bytes)
+    ? await arg.convertAnsiString(new Uint8Array(bytes))
     : undefined;
 };
 typeConverters[PT_UNICODE] = async (arg) => {
@@ -264,10 +264,8 @@ typeConverters[PT_MV_STRING8] = async (arg) => {
         const from = view.getUint32(4 + 4 * (x), true);
         const to = view.getUint32(4 + 4 * (x + 1), true);
 
-        const elementBytes = bytes.slice(from, to);
-
         list.push(
-          await arg.convertAnsiString(elementBytes)
+          await arg.convertAnsiString(new Uint8Array(bytes, from, to - from))
         )
       }
     }
@@ -320,11 +318,11 @@ function mixIntoOne(array: ArrayBuffer[]): ArrayBuffer {
 }
 
 export class PropertyValueResolverV1 implements PropertyValueResolver {
-  private convertAnsiString: (array: ArrayBuffer) => Promise<string>;
+  private convertAnsiString: (data: Uint8Array) => Promise<string>;
   private provideTypeConverterOf: ((type: number) => PrimitiveTypeConverter | undefined);
 
   constructor(
-    convertAnsiString: (array: ArrayBuffer) => Promise<string>,
+    convertAnsiString: (data: Uint8Array) => Promise<string>,
     provideTypeConverterOf?: (type: number) => PrimitiveTypeConverter | undefined,
     provideFallbackTypeConverterOf?: (type: number) => PrimitiveTypeConverter | undefined
   ) {

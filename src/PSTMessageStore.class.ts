@@ -1,10 +1,10 @@
-import { PropertyFinder } from './PAUtil'
-import { PLNode } from './PLNode'
-import { PLSubNode } from './PLSubNode'
-import { PSTFile } from './PSTFile.class'
-import { PSTObject } from './PSTObject.class'
-import { createPUNodeFrom, PUNode } from './PUNode'
-import { RootProvider } from './RootProvider'
+import type { PropertyFinder } from './PAUtil.js';
+import type { PLNode } from './PLNode.js';
+import type { PLSubNode } from './PLSubNode.js';
+import { PSTFile } from './PSTFile.class.js';
+import { PSTObject } from './PSTObject.class.js';
+import { createPUNodeFrom, type PUNode } from './PUNode.js';
+import type { RootProvider } from './RootProvider.js';
 
 export class PSTMessageStore extends PSTObject {
   /**

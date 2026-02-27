@@ -1,4 +1,4 @@
-import { KeyedDelay } from "./KeyedDelay";
+import { KeyedDelay } from "./KeyedDelay.js";
 
 /**
  * @internal

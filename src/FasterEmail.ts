@@ -1,4 +1,4 @@
-import { PSTMessage } from "./PSTMessage.class";
+import { PSTMessage } from "./PSTMessage.class.js";
 
 export interface FasterEmail {
   displayName: string;

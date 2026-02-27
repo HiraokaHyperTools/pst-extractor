@@ -1,20 +1,19 @@
-import { openLowPst } from '../PLUtil';
-import { getPropertyContext } from '../PropertyContextUtil';
-import { getTableContext } from '../TableContextUtil';
-import { PropertyValueResolverV1 } from '../PropertyValueResolverV1';
-import { processNameToIDMap } from '../PAUtil';
-import { openPstFile, PSTFolder } from '../index';
-import { decode } from 'iconv-lite';
+import { openLowPst } from '../PLUtil.js';
+import { getPropertyContext } from '../PropertyContextUtil.js';
+import { PropertyValueResolverV1 } from '../PropertyValueResolverV1.js';
+import { processNameToIDMap } from '../PAUtil.js';
+import { openPstFile, PSTFolder } from '../index.js';
 import fs from 'fs';
 import { getHeapFrom } from '../PHUtil';
-const resolve = require('path').resolve;
+import { resolve } from 'path';
+import { PSTUtil } from '../PSTUtil.class.js';
 
 // cls & yarn test:unit --testMatch "**/PLUtil.spec.ts" --coverage false
 
 const filePath = resolve('./src/__tests__/testdata/mtnman1965@outlook.com.ost');
 
 describe('PLUtil/PHUtil tests', () => {
-  async function doOpenPstFile(filePath) {
+  async function doOpenPstFile(filePath: string) {
     const pst = await openPstFile(filePath);
 
     async function walk(folder: PSTFolder, depth: number): Promise<void> {
@@ -56,7 +55,7 @@ describe('PLUtil/PHUtil tests', () => {
       const lowPst = await openLowPst({ readFile, close: async () => { } });
 
       const resolver = new PropertyValueResolverV1(
-        async (array) => decode(Buffer.from(array), "cp932")
+        PSTUtil.createConvertAnsiString("ms932")
       );
 
       {

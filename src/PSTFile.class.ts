@@ -1,21 +1,20 @@
-import Long from 'long'
-import { PSTFolder } from './PSTFolder.class'
-import { PSTMessageStore } from './PSTMessageStore.class'
-import { PSTUtil } from './PSTUtil.class'
-import { NodeMap } from './NodeMap.class'
-import { PSTOpts } from './PSTOpts'
-import { createPropertyFinder, PropertyFinder } from './PAUtil'
-import { PLStore } from './PLStore'
-import { getHeapFrom } from './PHUtil'
-import { getPropertyContext } from './PropertyContextUtil'
-import { PropertyValueResolverV1 } from './PropertyValueResolverV1'
-import iconv from 'iconv-lite'
-import { PLNode } from './PLNode'
-import { PSTMessage } from './PSTMessage.class'
-import { PropertyValueResolver } from './PropertyValueResolver'
-import { PLSubNode } from './PLSubNode'
-import { RootProvider } from './RootProvider'
-import { createPUNodeFrom, PUNode } from './PUNode'
+import Long from 'long';
+import { PSTFolder } from './PSTFolder.class.js';
+import { PSTMessageStore } from './PSTMessageStore.class.js';
+import { PSTUtil } from './PSTUtil.class.js';
+import { NodeMap } from './NodeMap.class.js';
+import type { PSTOpts } from './PSTOpts.js';
+import { createPropertyFinder } from './PAUtil.js';
+import type { PLStore } from './PLStore.js';
+import { getHeapFrom } from './PHUtil.js';
+import { getPropertyContext } from './PropertyContextUtil.js';
+import { PropertyValueResolverV1 } from './PropertyValueResolverV1.js';
+import type { PLNode } from './PLNode.js';
+import { PSTMessage } from './PSTMessage.class.js';
+import type { PropertyValueResolver } from './PropertyValueResolver.js';
+import type { PLSubNode } from './PLSubNode.js';
+import type { RootProvider } from './RootProvider.js';
+import { createPUNodeFrom, type PUNode } from './PUNode.js';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 
 export class PSTFile {
@@ -107,7 +106,7 @@ export class PSTFile {
   private _resolver: PropertyValueResolver;
 
   // node tree maps
-  private static nodeMap: NodeMap = new NodeMap();
+  private _nodeMap: NodeMap = new NodeMap();
 
   /**
    * Creates an instance of PSTFile.  File is opened in constructor.
@@ -120,13 +119,14 @@ export class PSTFile {
     nodeMap: NodeMap,
     opts?: PSTOpts
   ) {
-    PSTFile.nodeMap = nodeMap;
+    const convertAnsiString = (opts && opts.convertAnsiString)
+      || PSTUtil.createConvertAnsiString(
+        (opts && opts.ansiEncoding) || "latin1"
+      );
+    this._nodeMap = nodeMap;
     this._store = store;
     this._resolver = new PropertyValueResolverV1(
-      async (array) => iconv.decode(
-        Buffer.from(array),
-        (opts && opts.ansiEncoding) || "latin1"
-      ),
+      convertAnsiString,
       opts?.provideTypeConverterOf,
       opts?.provideFallbackTypeConverterOf
     );
@@ -148,7 +148,7 @@ export class PSTFile {
    * @memberof PSTFile
    */
   public getNameToIdMapItem(key: number, idx: number): number {
-    return PSTFile.nodeMap.getId(key, idx)
+    return this._nodeMap.getId(key, idx)
   }
 
   /**
@@ -158,19 +158,18 @@ export class PSTFile {
    * @returns {number}
    * @memberof PSTFile
    */
-  public static getPublicStringToIdMapItem(key: string): number {
-    return PSTFile.nodeMap.getId(key)
+  public getPublicStringToIdMapItem(key: string): number {
+    return this._nodeMap.getId(key)
   }
 
   /**
    * Get property name from id.
-   * @static
    * @param {number} propertyId
    * @param {boolean} bNamed
    * @returns {string}
    * @memberof PSTFile
    */
-  public static getPropertyName(
+  public getPropertyName(
     propertyId: number,
     bNamed: boolean
   ): string | undefined {
@@ -179,13 +178,12 @@ export class PSTFile {
 
   /**
    * Get name to id map key.
-   * @static
    * @param {number} propId
    * @returns {long}
    * @memberof PSTFile
    */
-  public static getNameToIdMapKey(propId: number): Long | undefined {
-    return PSTFile.nodeMap.getNumericName(propId)
+  public getNameToIdMapKey(propId: number): Long | undefined {
+    return this._nodeMap.getNumericName(propId)
   }
 
   /**
@@ -276,6 +274,7 @@ export class PSTFile {
       getNameToIdMapItem: this.getNameToIdMapItem.bind(this),
       getItemOf: this.getItemOf.bind(this),
       getFolderOf: this.getFolderOf.bind(this),
+      getStringToIdMapItem: this.getPublicStringToIdMapItem.bind(this),
     } as RootProvider
   }
 

@@ -1,8 +1,8 @@
-import { openPstFile } from '../openPstFile'
-import { PSTFile } from '../PSTFile.class'
-import { PSTFolder } from '../PSTFolder.class'
-import { PSTTask } from '../PSTTask.class'
-const resolve = require('path').resolve
+import { openPstFile } from '../openPstFile.js';
+import { PSTFile } from '../PSTFile.class.js';
+import { PSTFolder } from '../PSTFolder.class.js';
+import { PSTTask } from '../PSTTask.class.js';
+import { resolve } from 'path';
 let pstFile: PSTFile
 let folder: PSTFolder
 

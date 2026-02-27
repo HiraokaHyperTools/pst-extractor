@@ -1,4 +1,4 @@
-import { PHNodeHeapReader } from "./PHNodeHeapReader";
+import type { PHNodeHeapReader } from "./PHNodeHeapReader.js";
 
 export interface PHNodeHeap {
   /**

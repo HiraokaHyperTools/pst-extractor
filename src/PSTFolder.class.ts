@@ -1,21 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { OutlookProperties } from './OutlookProperties'
-import { PSTFile } from './PSTFile.class'
-import { PSTObject } from './PSTObject.class'
-import { PSTUtil } from './PSTUtil.class'
-import { PLNode } from './PLNode'
-import { createPropertyFinder, PropertyFinder } from './PAUtil'
-import { PSTMessage } from './PSTMessage.class'
-import { getTableContext } from './TableContextUtil'
-import { getHeapFrom } from './PHUtil'
-import { PLSubNode } from './PLSubNode'
-import { CollectionAsyncProvider } from './CollectionAsyncProvider'
-import { SingleAsyncProvider } from './SingleAsyncProvider'
-import { RootProvider } from './RootProvider'
-import { FasterEmail } from './FasterEmail'
-import { getPropertyContext } from './PropertyContextUtil'
-import { PropertyValueResolver } from './PropertyValueResolver'
-import { createPUNodeFrom, PUNode } from './PUNode'
+import { OutlookProperties } from './OutlookProperties.js';
+import { PSTFile } from './PSTFile.class.js';
+import { PSTObject } from './PSTObject.class.js';
+import { PSTUtil } from './PSTUtil.class.js';
+import type { PLNode } from './PLNode.js';
+import { createPropertyFinder, type PropertyFinder } from './PAUtil.js';
+import { PSTMessage } from './PSTMessage.class.js';
+import { getTableContext } from './TableContextUtil.js';
+import { getHeapFrom } from './PHUtil.js';
+import type { PLSubNode } from './PLSubNode.js';
+import { CollectionAsyncProvider } from './CollectionAsyncProvider.js';
+import { SingleAsyncProvider } from './SingleAsyncProvider.js';
+import type { RootProvider } from './RootProvider.js';
+import type { FasterEmail } from './FasterEmail.js';
+import { getPropertyContext } from './PropertyContextUtil.js';
+import type { PropertyValueResolver } from './PropertyValueResolver.js';
+import { createPUNodeFrom, type PUNode } from './PUNode.js';
 
 export interface GetFasterEmailListOptions {
   progress?: (current: number, count: number) => void;

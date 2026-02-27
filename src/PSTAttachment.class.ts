@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { OutlookProperties } from './OutlookProperties'
-import { PropertyFinder } from './PAUtil'
-import { PLNode } from './PLNode'
-import { PLSubNode } from './PLSubNode'
-import { PropertyTypeObject } from './PropertyTypeObject'
-import { PSTFile } from './PSTFile.class'
-import { PSTMessage } from './PSTMessage.class'
-import { PSTObject } from './PSTObject.class'
-import { PSTUtil } from './PSTUtil.class'
-import { RootProvider } from './RootProvider'
+import { OutlookProperties } from './OutlookProperties.js';
+import type { PropertyFinder } from './PAUtil.js';
+import type { PLNode } from './PLNode.js';
+import type { PLSubNode } from './PLSubNode.js';
+import { PropertyTypeObject } from './PropertyTypeObject.js';
+import { PSTFile } from './PSTFile.class.js';
+import { PSTMessage } from './PSTMessage.class.js';
+import { PSTObject } from './PSTObject.class.js';
+import { PSTUtil } from './PSTUtil.class.js';
+import type { RootProvider } from './RootProvider.js';
 
 // Class containing attachment information.
 export class PSTAttachment extends PSTObject {

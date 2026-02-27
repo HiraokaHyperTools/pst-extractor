@@ -1,22 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Long from 'long'
-import { OutlookProperties } from './OutlookProperties'
-import { PSTFile } from './PSTFile.class'
-import { PSTObject } from './PSTObject.class'
-import { PSTUtil } from './PSTUtil.class'
-import { LZFu } from './LZFu.class'
-import { PSTAttachment } from './PSTAttachment.class'
-import { PSTRecipient } from './PSTRecipient.class'
-import { PLNode } from './PLNode'
-import { createPropertyFinder, PropertyFinder } from './PAUtil'
-import { getHeapFrom } from './PHUtil'
-import { getTableContext } from './TableContextUtil'
-import { getPropertyContext } from './PropertyContextUtil'
-import { PLSubNode } from './PLSubNode'
-import { SingleAsyncProvider } from './SingleAsyncProvider'
-import { CollectionAsyncProvider } from './CollectionAsyncProvider'
-import { RootProvider } from './RootProvider'
-import { createPUSubNodeFrom, PUSubNode } from './PUSubNode'
+import Long from 'long';
+import { OutlookProperties } from './OutlookProperties.js';
+import { PSTFile } from './PSTFile.class.js';
+import { PSTObject } from './PSTObject.class.js';
+import { PSTUtil } from './PSTUtil.class.js';
+import { LZFu } from './LZFu.class.js';
+import { PSTAttachment } from './PSTAttachment.class.js';
+import { PSTRecipient } from './PSTRecipient.class.js';
+import type { PLNode } from './PLNode.js';
+import { createPropertyFinder, type PropertyFinder } from './PAUtil.js';
+import { getHeapFrom } from './PHUtil.js';
+import { getTableContext } from './TableContextUtil.js';
+import { getPropertyContext } from './PropertyContextUtil.js';
+import type { PLSubNode } from './PLSubNode.js';
+import { SingleAsyncProvider } from './SingleAsyncProvider.js';
+import { CollectionAsyncProvider } from './CollectionAsyncProvider.js';
+import type { RootProvider } from './RootProvider.js';
+import { createPUSubNodeFrom, type PUSubNode } from './PUSubNode.js';
 
 enum PidTagMessageFlags {
   MSGFLAG_READ = 0x01,
@@ -1256,7 +1256,7 @@ export class PSTMessage extends PSTObject {
    * @memberof PSTMessage
    */
   public get colorCategories(): string[] {
-    const keywordCategory: number = PSTFile.getPublicStringToIdMapItem(
+    const keywordCategory: number = this._rootProvider.getStringToIdMapItem(
       'Keywords'
     )
 

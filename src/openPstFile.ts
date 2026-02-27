@@ -1,11 +1,10 @@
-import { PSTFile } from './PSTFile.class'
-import fs from 'fs'
-import { openLowPst, ReadFileApi } from './PLUtil'
-import { PropertyValueResolver } from './PropertyValueResolver'
-import { PropertyValueResolverV1 } from './PropertyValueResolverV1';
-import iconv from 'iconv-lite';
-import { processNameToIDMap } from './PAUtil';
-import { PSTOpts } from './PSTOpts';
+import { PSTFile } from './PSTFile.class.js';
+import fs from 'fs';
+import { openLowPst, type ReadFileApi } from './PLUtil.js';
+import { PropertyValueResolverV1 } from './PropertyValueResolverV1.js';
+import { processNameToIDMap } from './PAUtil.js';
+import type { PSTOpts } from './PSTOpts.js';
+import { PSTUtil } from './PSTUtil.class.js';
 
 /**
  * Open pst/ost file from os file path.
@@ -53,11 +52,9 @@ export async function openPst(
   const lowPst = await openLowPst(api);
 
   const convertAnsiString = (opts && opts.convertAnsiString)
-    || (async (array) =>
-      iconv.decode(
-        Buffer.from(array),
-        (opts && opts.ansiEncoding) || "latin1"
-      ));
+    || PSTUtil.createConvertAnsiString(
+      (opts && opts.ansiEncoding) || "latin1"
+    );
 
   const resolver = new PropertyValueResolverV1(
     convertAnsiString,

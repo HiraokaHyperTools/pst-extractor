@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Long from 'long'
-import { OutlookProperties } from './OutlookProperties'
-import { PropertyFinder } from './PAUtil'
-import { PLNode } from './PLNode'
-import { PLSubNode } from './PLSubNode'
-import { Property } from './Property'
-import { PSTFile } from './PSTFile.class'
-import { RootProvider } from './RootProvider'
+import Long from 'long';
+import { OutlookProperties } from './OutlookProperties.js';
+import type { PropertyFinder } from './PAUtil.js';
+import type { PLNode } from './PLNode.js';
+import type { PLSubNode } from './PLSubNode.js';
+import type { Property } from './Property.js';
+import { PSTFile } from './PSTFile.class.js';
+import type { RootProvider } from './RootProvider.js';
 
 export abstract class PSTObject {
   protected _rootProvider: RootProvider

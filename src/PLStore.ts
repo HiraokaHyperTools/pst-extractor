@@ -2,7 +2,7 @@
  * PST lower level store
  */
 
-import { PLNode } from "./PLNode";
+import type { PLNode } from "./PLNode.js";
 
 export interface PLStore {
   getOneNodeBy(nodeId: number): PLNode | undefined;

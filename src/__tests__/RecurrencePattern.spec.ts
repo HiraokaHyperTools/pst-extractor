@@ -1,9 +1,9 @@
-import { PSTFile } from '../PSTFile.class'
-import { PSTFolder } from '../PSTFolder.class'
-import { PSTAppointment } from '../PSTAppointment.class'
-import { PatternType, RecurrencePattern } from '../RecurrencePattern.class'
-import { openPstFile } from '../openPstFile'
-const resolve = require('path').resolve
+import { PSTFile } from '../PSTFile.class.js';
+import { PSTFolder } from '../PSTFolder.class.js';
+import { PSTAppointment } from '../PSTAppointment.class.js';
+import { PatternType, RecurrencePattern } from '../RecurrencePattern.class.js';
+import { openPstFile } from '../openPstFile.js';
+import { resolve } from 'path';
 let pstFile: PSTFile
 let folder: PSTFolder
 
