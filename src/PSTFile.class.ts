@@ -15,9 +15,11 @@ import type { PropertyValueResolver } from './PropertyValueResolver.js';
 import type { PLSubNode } from './PLSubNode.js';
 import type { RootProvider } from './RootProvider.js';
 import { createPUNodeFrom, type PUNode } from './PUNode.js';
+import type { IPSTFile } from './IPSTFile.js';
+import type { IPSTFolder } from './IPSTFolder.js';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 
-export class PSTFile {
+export class PSTFile implements IPSTFile {
   /**
    * @internal
    */
@@ -112,7 +114,6 @@ export class PSTFile {
    * Creates an instance of PSTFile.  File is opened in constructor.
    * @internal
    * @param {string} fileName
-   * @memberof PSTFile
    */
   public constructor(
     store: PLStore,
@@ -134,7 +135,6 @@ export class PSTFile {
 
   /**
    * Close the file.
-   * @memberof PSTFile
    */
   public async close(): Promise<void> {
     await this._store.close();
@@ -145,7 +145,6 @@ export class PSTFile {
    * @param {number} key
    * @param {number} idx
    * @returns {number}
-   * @memberof PSTFile
    */
   public getNameToIdMapItem(key: number, idx: number): number {
     return this._nodeMap.getId(key, idx)
@@ -153,10 +152,7 @@ export class PSTFile {
 
   /**
    * Get public string to id map item.
-   * @static
    * @param {string} key
-   * @returns {number}
-   * @memberof PSTFile
    */
   public getPublicStringToIdMapItem(key: string): number {
     return this._nodeMap.getId(key)
@@ -167,7 +163,6 @@ export class PSTFile {
    * @param {number} propertyId
    * @param {boolean} bNamed
    * @returns {string}
-   * @memberof PSTFile
    */
   public getPropertyName(
     propertyId: number,
@@ -180,7 +175,6 @@ export class PSTFile {
    * Get name to id map key.
    * @param {number} propId
    * @returns {long}
-   * @memberof PSTFile
    */
   public getNameToIdMapKey(propId: number): Long | undefined {
     return this._nodeMap.getNumericName(propId)
@@ -190,7 +184,6 @@ export class PSTFile {
    * Get the message store of the PST file.  Note that this doesn't really
    * have much information, better to look under the root folder.
    * @returns {PSTMessageStore}
-   * @memberof PSTFile
    */
   public async getMessageStore(): Promise<PSTMessageStore> {
     const node = this._store.getOneNodeBy(
@@ -211,7 +204,7 @@ export class PSTFile {
     );
   }
 
-  private async getFolderOf(node: PLNode): Promise<PSTFolder> {
+  private async getFolderOf(node: PLNode): Promise<IPSTFolder> {
     const heap = await getHeapFrom(node.getSubNode());
     const pc = await getPropertyContext(
       heap,
@@ -242,10 +235,8 @@ export class PSTFile {
 
   /**
    * Get the root folder for the PST file
-   * @returns {PSTFolder}
-   * @memberof PSTFile
    */
-  public async getRootFolder(): Promise<PSTFolder> {
+  public async getRootFolder(): Promise<IPSTFolder> {
     const node = this._store.getOneNodeBy(
       PSTFile.ROOT_FOLDER_DESCRIPTOR_IDENTIFIER
     );
@@ -257,10 +248,8 @@ export class PSTFile {
 
   /**
    * Get the `Top of Outlook data file` of the PST file
-   * @returns {PSTFolder}
-   * @memberof PSTFile
    */
-  public async getTopOfOutlookDataFile(): Promise<PSTFolder> {
+  public async getTopOfOutlookDataFile(): Promise<IPSTFolder> {
     const node = this._store.getOneNodeBy(32802);
     if (node === undefined) {
       throw new Error("Top of Outlook data file not found");
@@ -301,7 +290,6 @@ export class PSTFile {
   /**
    * JSON stringify the object properties.
    * @returns {string}
-   * @memberof PSTFile
    */
   public toJSON(): any {
     return this

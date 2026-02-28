@@ -7,8 +7,9 @@ import type { PLSubNode } from './PLSubNode.js';
 import type { Property } from './Property.js';
 import { PSTFile } from './PSTFile.class.js';
 import type { RootProvider } from './RootProvider.js';
+import type { IPSTObject } from './IPSTObject.js';
 
-export abstract class PSTObject {
+export abstract class PSTObject implements IPSTObject {
   protected _rootProvider: RootProvider
   protected _node: PLNode
   protected _subNode: PLSubNode
@@ -17,7 +18,6 @@ export abstract class PSTObject {
   /**
    * Creates an instance of PSTObject, the root class of most PST Items.
    * @internal
-   * @memberof PSTObject
    */
   constructor(
     rootProvider: RootProvider,
@@ -38,7 +38,6 @@ export abstract class PSTObject {
    * Get the node type for the descriptor id.
    * @param {number} [descriptorIdentifier]
    * @returns {number}
-   * @memberof PSTObject
    */
   protected getNodeType(descriptorIdentifier?: number): number {
     if (descriptorIdentifier) {
@@ -55,7 +54,6 @@ export abstract class PSTObject {
    * @param { number } identifier
    * @param { number } [defaultValue]
    * @returns { number }
-   * @memberof PSTObject
    */
   protected getIntItem(identifier: number, defaultValue?: number): number {
     if (!defaultValue) {
@@ -77,7 +75,6 @@ export abstract class PSTObject {
    * @param {number} identifier
    * @param {boolean} [defaultValue]
    * @returns {boolean}
-   * @memberof PSTObject
    */
   protected getBooleanItem(
     identifier: number,
@@ -102,7 +99,6 @@ export abstract class PSTObject {
    * @param {number} identifier
    * @param {number} [defaultValue]
    * @returns {number}
-   * @memberof PSTObject
    */
   protected getDoubleItem(identifier: number, defaultValue?: number): number {
     if (defaultValue === undefined) {
@@ -124,7 +120,6 @@ export abstract class PSTObject {
    * @param {number} identifier
    * @param {long} [defaultValue]
    * @returns {long}
-   * @memberof PSTObject
    */
   protected getLongItem(identifier: number, defaultValue?: Long): Long {
     if (defaultValue === undefined) {
@@ -150,7 +145,6 @@ export abstract class PSTObject {
    * @param {number} [stringType]
    * @param {string} [codepage]
    * @returns {string}
-   * @memberof PSTObject
    */
   protected getStringItem(
     identifier: number,
@@ -171,7 +165,6 @@ export abstract class PSTObject {
    * Get a date.
    * @param {number} identifier
    * @returns {Date}
-   * @memberof PSTObject
    */
   protected getDateItem(identifier: number): Date | null {
     const property = this._propertyFinder.findByKey(identifier);
@@ -189,7 +182,6 @@ export abstract class PSTObject {
    * @protected
    * @param {number} identifier
    * @returns {Buffer}
-   * @memberof PSTObject
    */
   protected getBinaryItem(identifier: number): Buffer | null {
     const property = this._propertyFinder.findByKey(identifier);
@@ -207,7 +199,6 @@ export abstract class PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc842383.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTObject
    */
   public get displayName(): string {
     return this.getStringItem(OutlookProperties.PR_DISPLAY_NAME)
@@ -242,7 +233,6 @@ export abstract class PSTObject {
   /**
    * JSON the object.
    * @returns {string}
-   * @memberof PSTObject
    */
   public toJSON(): any {
     return this

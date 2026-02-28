@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type { IPSTRecipient } from './IPSTRecipient.js';
 import { OutlookProperties } from './OutlookProperties.js';
 import type { PropertyFinder } from './PAUtil.js';
 import type { PLNode } from './PLNode.js';
@@ -7,12 +8,11 @@ import { PSTObject } from './PSTObject.class.js';
 import type { RootProvider } from './RootProvider.js';
 
 // Class containing recipient information
-export class PSTRecipient extends PSTObject {
+export class PSTRecipient extends PSTObject implements IPSTRecipient {
   /**
    * Creates an instance of PSTRecipient.
    * @internal
    * @param {Map<number, PSTTableItem>} recipientDetails
-   * @memberof PSTRecipient
    */
   constructor(
     rootProvider: RootProvider,
@@ -34,7 +34,6 @@ export class PSTRecipient extends PSTObject {
    * 
    * @readonly
    * @type {number}
-   * @memberof PSTMessage
    */
   public get recipientType(): number {
     return this.getIntItem(OutlookProperties.PR_RECIPIENT_TYPE)
@@ -45,7 +44,6 @@ export class PSTRecipient extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc815548.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get addrType(): string {
     return this.getStringItem(OutlookProperties.PR_ADDRTYPE)
@@ -56,7 +54,6 @@ export class PSTRecipient extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc842372.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get emailAddress(): string {
     return this.getStringItem(OutlookProperties.PR_EMAIL_ADDRESS)
@@ -67,7 +64,6 @@ export class PSTRecipient extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc815629.aspx
    * @readonly
    * @type {number}
-   * @memberof PSTRecipient
    */
   public get recipientFlags(): number {
     return this.getIntItem(OutlookProperties.PR_RECIPIENT_FLAGS)
@@ -78,7 +74,6 @@ export class PSTRecipient extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/ee201359(v=exchg.80).aspx
    * @readonly
    * @type {number}
-   * @memberof PSTRecipient
    */
   public get recipientOrder(): number {
     return this.getIntItem(OutlookProperties.PidTagRecipientOrder)
@@ -89,7 +84,6 @@ export class PSTRecipient extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc842421.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTRecipient
    */
   public get smtpAddress(): string {
     // If the recipient address type is SMTP, we can simply return the recipient address.
@@ -107,7 +101,6 @@ export class PSTRecipient extends PSTObject {
   /**
    * JSON stringify the object properties.
    * @returns {string}
-   * @memberof PSTRecipient
    */
   public toJSON(): any {
     const clone = Object.assign(

@@ -1,3 +1,4 @@
+import type { IPSTMessageStore } from './IPSTMessageStore.js';
 import type { PropertyFinder } from './PAUtil.js';
 import type { PLNode } from './PLNode.js';
 import type { PLSubNode } from './PLSubNode.js';
@@ -6,14 +7,13 @@ import { PSTObject } from './PSTObject.class.js';
 import { createPUNodeFrom, type PUNode } from './PUNode.js';
 import type { RootProvider } from './RootProvider.js';
 
-export class PSTMessageStore extends PSTObject {
+export class PSTMessageStore extends PSTObject implements IPSTMessageStore {
   /**
    * Creates an instance of PSTMessageStore.
    * Not much use other than to get the "name" of the PST file.
    * @internal
    * @param {PSTFile} rootProvider
    * @param {DescriptorIndexNode} descriptorIndexNode
-   * @memberof PSTMessageStore
    */
   constructor(
     rootProvider: RootProvider,

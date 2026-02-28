@@ -6,8 +6,9 @@ import type { PLNode } from './PLNode.js';
 import type { PropertyFinder } from './PAUtil.js';
 import type { PLSubNode } from './PLSubNode.js';
 import type { RootProvider } from './RootProvider.js';
+import type { IPSTActivity } from './IPSTActivity.js';
 
-export class PSTActivity extends PSTMessage {
+export class PSTActivity extends PSTMessage implements IPSTActivity {
   /**
    * Creates an instance of PSTActivity.  Represents Journal entries, class IPM.Activity.
    * https://msdn.microsoft.com/en-us/library/office/aa204771(v=office.11).aspx
@@ -15,7 +16,6 @@ export class PSTActivity extends PSTMessage {
    * @param {PSTFile} rootProvider
    * @param {DescriptorIndexNode} descriptorIndexNode
    * @param {Map<number, PSTDescriptorItem>} [localDescriptorItems]
-   * @memberof PSTActivity
    */
   constructor(
     rootProvider: RootProvider,
@@ -31,7 +31,6 @@ export class PSTActivity extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc839662.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTActivity
    */
   public get logType(): string {
     return this.getStringItem(
@@ -47,7 +46,6 @@ export class PSTActivity extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842339.aspx
    * @readonly
    * @type {Date}
-   * @memberof PSTActivity
    */
   public get logStart(): Date | null {
     return this.getDateItem(
@@ -63,7 +61,6 @@ export class PSTActivity extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc765536.aspx
    * @readonly
    * @type {number}
-   * @memberof PSTActivity
    */
   public get logDuration(): number {
     return this.getIntItem(
@@ -79,7 +76,6 @@ export class PSTActivity extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc839572.aspx
    * @readonly
    * @type {Date}
-   * @memberof PSTActivity
    */
   public get logEnd(): Date | null {
     return this.getDateItem(
@@ -95,7 +91,6 @@ export class PSTActivity extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815433.aspx
    * @readonly
    * @type {number}
-   * @memberof PSTActivity
    */
   public get logFlags(): number {
     return this.getIntItem(
@@ -111,7 +106,6 @@ export class PSTActivity extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc839873.aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTActivity
    */
   public get isDocumentPrinted(): boolean {
     return this.getBooleanItem(
@@ -127,7 +121,6 @@ export class PSTActivity extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815488.aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTActivity
    */
   public get isDocumentSaved(): boolean {
     return this.getBooleanItem(
@@ -143,7 +136,6 @@ export class PSTActivity extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc839558.aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTActivity
    */
   public get isDocumentRouted(): boolean {
     return this.getBooleanItem(
@@ -159,7 +151,6 @@ export class PSTActivity extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815353.aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTActivity
    */
   public get isDocumentPosted(): boolean {
     return this.getBooleanItem(
@@ -175,7 +166,6 @@ export class PSTActivity extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815500.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTActivity
    */
   public get logTypeDesc(): string {
     return this.getStringItem(
@@ -189,7 +179,6 @@ export class PSTActivity extends PSTMessage {
   /**
    * JSON stringify the object properties.
    * @returns {string}
-   * @memberof PSTActivity
    */
   public toJSON(): any {
     const clone = Object.assign(

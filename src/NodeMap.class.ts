@@ -3,8 +3,8 @@ import Long from 'long';
 
 /**
  * Stores node names (both alpha and numeric) in node maps for quick lookup.
- * @export
- * @class NodeMap
+ * 
+ * @internal
  */
 export class NodeMap {
   private nameToId: Map<string, number> = new Map()
@@ -16,7 +16,6 @@ export class NodeMap {
    * @param {*} key
    * @param {number} propId
    * @param {number} [idx]
-   * @memberof NodeMap
    */
   public setId(key: any, propId: number, idx?: number): void {
     if (typeof key === 'number' && idx !== undefined) {
@@ -38,7 +37,6 @@ export class NodeMap {
    * @param {*} key
    * @param {number} [idx]
    * @returns {number}
-   * @memberof NodeMap
    */
   public getId(key: any, idx?: number): number {
     let id: number | undefined = undefined
@@ -59,7 +57,6 @@ export class NodeMap {
    * Get a node from the map.
    * @param {number} propId
    * @returns {long}
-   * @memberof NodeMap
    */
   public getNumericName(propId: number): Long | undefined {
     const lkey = this.idToNumericName.get(propId)

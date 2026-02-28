@@ -1,6 +1,9 @@
 {
   "entryPoints": [
-    "./src/index.ts"
+    "./src/index.ts",
+    "./src/PAUtil.ts",
+    "./src/PropertyValueResolverV1.ts",
+    "./src/NodeMap.class.ts"
   ],
   "out": "docs/typedoc",
   "excludePrivate": true,

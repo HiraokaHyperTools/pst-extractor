@@ -1,6 +1,6 @@
 {
   "name": "@hiraokahypertools/pst-extractor",
-  "version": "0.3.0-alpha.1",
+  "version": "0.4.0-alpha.1",
   "description": "Extract objects from MS Outlook/Exchange PST files",
   "exports": {
     ".": {

@@ -10,7 +10,6 @@ export class LZFu {
    * @static
    * @param {Buffer} data
    * @returns {string}
-   * @memberof LZFu
    */
   public static decode(data: Buffer): string {
     // const compressedSize: number = PSTUtil.convertLittleEndianBytesToLong(

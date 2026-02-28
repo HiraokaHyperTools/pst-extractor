@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type { IPSTContact } from './IPSTContact.js';
 import { OutlookProperties } from './OutlookProperties.js';
 import type { PropertyFinder } from './PAUtil.js';
 import type { PLNode } from './PLNode.js';
@@ -7,7 +8,7 @@ import { PSTFile } from './PSTFile.class.js';
 import { PSTMessage } from './PSTMessage.class.js';
 import type { RootProvider } from './RootProvider.js';
 
-export class PSTContact extends PSTMessage {
+export class PSTContact extends PSTMessage implements IPSTContact {
   /**
    * 
    * @internal
@@ -26,7 +27,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842401.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get account(): string {
     return this.getStringItem(OutlookProperties.PR_ACCOUNT)
@@ -37,7 +37,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc839943.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get callbackTelephoneNumber(): string {
     return this.getStringItem(OutlookProperties.PR_CALLBACK_TELEPHONE_NUMBER)
@@ -48,7 +47,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842136.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get generation(): string {
     return this.getStringItem(OutlookProperties.PR_GENERATION)
@@ -59,7 +57,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815351.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get givenName(): string {
     return this.getStringItem(OutlookProperties.PR_GIVEN_NAME)
@@ -70,7 +67,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815890.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get governmentIdNumber(): string {
     return this.getStringItem(OutlookProperties.PR_GOVERNMENT_ID_NUMBER)
@@ -81,7 +77,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc839937.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get businessTelephoneNumber(): string {
     return this.getStringItem(OutlookProperties.PR_BUSINESS_TELEPHONE_NUMBER)
@@ -92,7 +87,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815389.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get homeTelephoneNumber(): string {
     return this.getStringItem(OutlookProperties.PR_HOME_TELEPHONE_NUMBER)
@@ -103,7 +97,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc839843.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get initials(): string {
     return this.getStringItem(OutlookProperties.PR_INITIALS)
@@ -114,7 +107,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842250.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get keyword(): string {
     return this.getStringItem(OutlookProperties.PR_KEYWORD)
@@ -125,7 +117,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc839724.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get language(): string {
     return this.getStringItem(OutlookProperties.PR_LANGUAGE)
@@ -136,7 +127,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815567.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get location(): string {
     return this.getStringItem(OutlookProperties.PR_LOCATION)
@@ -147,7 +137,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842474.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get mhsCommonName(): string {
     return this.getStringItem(OutlookProperties.PR_MHS_COMMON_NAME)
@@ -158,7 +147,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc765672.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get organizationalIdNumber(): string {
     return this.getStringItem(OutlookProperties.PR_ORGANIZATIONAL_ID_NUMBER)
@@ -169,7 +157,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc765704.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get surname(): string {
     return this.getStringItem(OutlookProperties.PR_SURNAME)
@@ -180,7 +167,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc765709.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get originalDisplayName(): string {
     return this.getStringItem(OutlookProperties.PR_ORIGINAL_DISPLAY_NAME)
@@ -191,7 +177,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842549.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get postalAddress(): string {
     return this.getStringItem(OutlookProperties.PR_POSTAL_ADDRESS)
@@ -202,7 +187,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842192.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get companyName(): string {
     return this.getStringItem(OutlookProperties.PT_UNICODE)
@@ -213,7 +197,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815831.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get title(): string {
     return this.getStringItem(OutlookProperties.PR_TITLE)
@@ -224,7 +207,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc839825.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get departmentName(): string {
     return this.getStringItem(OutlookProperties.PR_DEPARTMENT_NAME)
@@ -235,7 +217,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842269.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get officeLocation(): string {
     return this.getStringItem(OutlookProperties.PR_OFFICE_LOCATION)
@@ -246,7 +227,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc839969.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get primaryTelephoneNumber(): string {
     return this.getStringItem(OutlookProperties.PR_PRIMARY_TELEPHONE_NUMBER)
@@ -257,7 +237,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc841990.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get business2TelephoneNumber(): string {
     return this.getStringItem(OutlookProperties.PR_BUSINESS2_TELEPHONE_NUMBER)
@@ -268,7 +247,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc839798.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get mobileTelephoneNumber(): string {
     return this.getStringItem(OutlookProperties.PR_MOBILE_TELEPHONE_NUMBER)
@@ -279,7 +257,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc839806.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get radioTelephoneNumber(): string {
     return this.getStringItem(OutlookProperties.PR_RADIO_TELEPHONE_NUMBER)
@@ -290,7 +267,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815394.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get carTelephoneNumber(): string {
     return this.getStringItem(OutlookProperties.PR_CAR_TELEPHONE_NUMBER)
@@ -301,7 +277,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc839561.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get otherTelephoneNumber(): string {
     return this.getStringItem(OutlookProperties.PR_OTHER_TELEPHONE_NUMBER)
@@ -312,7 +287,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815723.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get transmittableDisplayName(): string {
     return this.getStringItem(OutlookProperties.PR_TRANSMITABLE_DISPLAY_NAME)
@@ -323,7 +297,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc765824.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get pagerTelephoneNumber(): string {
     return this.getStringItem(OutlookProperties.PR_PAGER_TELEPHONE_NUMBER)
@@ -334,7 +307,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815713.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get primaryFaxNumber(): string {
     return this.getStringItem(OutlookProperties.PR_PRIMARY_FAX_NUMBER)
@@ -345,7 +317,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc765799.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get businessFaxNumber(): string {
     return this.getStringItem(OutlookProperties.PR_BUSINESS_FAX_NUMBER)
@@ -356,7 +327,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842109.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get homeFaxNumber(): string {
     return this.getStringItem(OutlookProperties.PR_HOME_FAX_NUMBER)
@@ -367,7 +337,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842494.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get businessAddressCountry(): string {
     return this.getStringItem(OutlookProperties.PR_COUNTRY)
@@ -378,7 +347,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815711.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get businessAddressCity(): string {
     return this.getStringItem(OutlookProperties.PR_LOCALITY)
@@ -389,7 +357,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc839544.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get businessAddressStateOrProvince(): string {
     return this.getStringItem(OutlookProperties.PR_STATE_OR_PROVINCE)
@@ -400,7 +367,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc765810.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get businessAddressStreet(): string {
     return this.getStringItem(OutlookProperties.PR_STREET_ADDRESS)
@@ -411,7 +377,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc839851.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get businessPostalCode(): string {
     return this.getStringItem(OutlookProperties.PR_POSTAL_CODE)
@@ -422,7 +387,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815522.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get businessPoBox(): string {
     return this.getStringItem(OutlookProperties.PR_POST_OFFICE_BOX)
@@ -433,7 +397,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc765894.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get telexNumber(): string {
     return this.getStringItem(OutlookProperties.PR_TELEX_NUMBER)
@@ -444,7 +407,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc765863.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get isdnNumber(): string {
     return this.getStringItem(OutlookProperties.PR_ISDN_NUMBER)
@@ -455,7 +417,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc840012.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get assistantTelephoneNumber(): string {
     return this.getStringItem(OutlookProperties.PR_ASSISTANT_TELEPHONE_NUMBER)
@@ -466,7 +427,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815540.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get home2TelephoneNumber(): string {
     return this.getStringItem(OutlookProperties.PR_HOME2_TELEPHONE_NUMBER)
@@ -477,7 +437,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815319.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get assistant(): string {
     return this.getStringItem(OutlookProperties.PR_ASSISTANT)
@@ -488,7 +447,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815391.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get hobbies(): string {
     return this.getStringItem(OutlookProperties.PR_HOBBIES)
@@ -499,7 +457,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815329.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get middleName(): string {
     return this.getStringItem(OutlookProperties.PR_MIDDLE_NAME)
@@ -510,7 +467,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc765538.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get displayNamePrefix(): string {
     return this.getStringItem(OutlookProperties.PR_DISPLAY_NAME_PREFIX)
@@ -521,7 +477,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc765792.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get profession(): string {
     return this.getStringItem(OutlookProperties.PR_PROFESSION)
@@ -532,7 +487,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc765803.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get preferredByName(): string {
     return this.getStringItem(OutlookProperties.PR_REFERRED_BY_NAME)
@@ -543,7 +497,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc765832.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get spouseName(): string {
     return this.getStringItem(OutlookProperties.PR_SPOUSE_NAME)
@@ -554,7 +507,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc839633.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get computerNetworkName(): string {
     return this.getStringItem(OutlookProperties.PR_COMPUTER_NETWORK_NAME)
@@ -565,7 +517,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842178.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get customerId(): string {
     return this.getStringItem(OutlookProperties.PR_CUSTOMER_ID)
@@ -576,7 +527,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc765580.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get ttytddPhoneNumber(): string {
     return this.getStringItem(OutlookProperties.PR_TTYTDD_PHONE_NUMBER)
@@ -587,7 +537,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc839830.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get ftpSite(): string {
     return this.getStringItem(OutlookProperties.PR_FTP_SITE)
@@ -598,7 +547,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842009.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get managerName(): string {
     return this.getStringItem(OutlookProperties.PR_MANAGER_NAME)
@@ -609,7 +557,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc765603.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get nickname(): string {
     return this.getStringItem(OutlookProperties.PR_NICKNAME)
@@ -620,7 +567,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc765751.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get personalHomePage(): string {
     return this.getStringItem(OutlookProperties.PR_PERSONAL_HOME_PAGE)
@@ -631,7 +577,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842385.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get businessHomePage(): string {
     return this.getStringItem(OutlookProperties.PR_BUSINESS_HOME_PAGE)
@@ -641,7 +586,6 @@ export class PSTContact extends PSTMessage {
    * Get the note associated with the contact.
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get note(): string {
     return this.getStringItem(0x6619)
@@ -651,7 +595,6 @@ export class PSTContact extends PSTMessage {
    * Get a named string item from the map
    * @param {number} key
    * @returns {string}
-   * @memberof PSTContact
    */
   public getNamedStringItem(key: number): string {
     const id = this._rootProvider.getNameToIdMapItem(
@@ -669,7 +612,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc839651.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get companyMainPhoneNumber(): string {
     return this.getStringItem(OutlookProperties.PR_COMPANY_MAIN_PHONE_NUMBER)
@@ -680,7 +622,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc839533.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get childrensNames(): string {
     return this.getStringItem(OutlookProperties.PR_CHILDRENS_NAMES)
@@ -691,7 +632,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815582.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get homeAddressCity(): string {
     return this.getStringItem(OutlookProperties.PR_HOME_ADDRESS_CITY)
@@ -702,7 +642,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842548.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get homeAddressCountry(): string {
     return this.getStringItem(OutlookProperties.PR_HOME_ADDRESS_COUNTRY)
@@ -713,7 +652,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815880.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get homeAddressPostalCode(): string {
     return this.getStringItem(OutlookProperties.PR_HOME_ADDRESS_POSTAL_CODE)
@@ -724,7 +662,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc839958.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get homeAddressStateOrProvince(): string {
     return this.getStringItem(
@@ -737,7 +674,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc841997.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get homeAddressStreet(): string {
     return this.getStringItem(OutlookProperties.PR_HOME_ADDRESS_STREET)
@@ -748,7 +684,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842440.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get homeAddressPostOfficeBox(): string {
     return this.getStringItem(OutlookProperties.PR_HOME_ADDRESS_POST_OFFICE_BOX)
@@ -759,7 +694,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc765881.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get otherAddressCity(): string {
     return this.getStringItem(OutlookProperties.PR_OTHER_ADDRESS_CITY)
@@ -770,7 +704,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc765814.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get otherAddressCountry(): string {
     return this.getStringItem(OutlookProperties.PR_OTHER_ADDRESS_CITY)
@@ -781,7 +714,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842261.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get otherAddressPostalCode(): string {
     return this.getStringItem(OutlookProperties.PR_OTHER_ADDRESS_POSTAL_CODE)
@@ -792,7 +724,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815782.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get otherAddressStateOrProvince(): string {
     return this.getStringItem(
@@ -805,7 +736,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc839546.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get otherAddressStreet(): string {
     return this.getStringItem(OutlookProperties.PR_OTHER_ADDRESS_STREET)
@@ -816,7 +746,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842396.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get otherAddressPostOfficeBox(): string {
     return this.getStringItem(
@@ -833,7 +762,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842002.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get fileUnder(): string {
     return this.getNamedStringItem(OutlookProperties.PidLidFileUnder)
@@ -844,7 +772,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc839539.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get homeAddress(): string {
     return this.getNamedStringItem(OutlookProperties.PidLidHomeAddress)
@@ -855,7 +782,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815905.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get workAddress(): string {
     return this.getNamedStringItem(OutlookProperties.PidLidWorkAddress)
@@ -866,7 +792,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815383.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get otherAddress(): string {
     return this.getNamedStringItem(OutlookProperties.PidLidOtherAddress)
@@ -877,7 +802,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815430.aspx
    * @readonly
    * @type {number}
-   * @memberof PSTContact
    */
   public get postalAddressId(): number {
     return this.getIntItem(
@@ -893,7 +817,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842001.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get html(): string {
     return this.getNamedStringItem(OutlookProperties.PidLidHtml)
@@ -904,7 +827,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815537.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get workAddressStreet(): string {
     return this.getNamedStringItem(OutlookProperties.PidLidWorkAddressStreet)
@@ -915,7 +837,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc765923.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get workAddressCity(): string {
     return this.getNamedStringItem(OutlookProperties.PidLidWorkAddressCity)
@@ -926,7 +847,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842152.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get workAddressState(): string {
     return this.getNamedStringItem(OutlookProperties.PidLidWorkAddressState)
@@ -937,7 +857,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842066.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get workAddressPostalCode(): string {
     return this.getNamedStringItem(
@@ -950,7 +869,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc765698.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get workAddressCountry(): string {
     return this.getNamedStringItem(OutlookProperties.PidLidWorkAddressCountry)
@@ -961,7 +879,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815563.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get workAddressPostOfficeBox(): string {
     return this.getNamedStringItem(
@@ -974,7 +891,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815607.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get instantMessagingAddress(): string {
     return this.getNamedStringItem(
@@ -987,7 +903,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815460.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get email1DisplayName(): string {
     return this.getNamedStringItem(OutlookProperties.PidLidEmail1DisplayName)
@@ -998,7 +913,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815570.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get email1AddressType(): string {
     return this.getNamedStringItem(OutlookProperties.PidLidEmail1AddressType)
@@ -1009,7 +923,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842050.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get email1EmailAddress(): string {
     return this.getNamedStringItem(OutlookProperties.PidLidEmail1EmailAddress)
@@ -1020,7 +933,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815564.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get email1OriginalDisplayName(): string {
     return this.getNamedStringItem(
@@ -1033,7 +945,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc839675.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get email2DisplayName(): string {
     return this.getNamedStringItem(OutlookProperties.PidLidEmail2DisplayName)
@@ -1044,7 +955,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815361.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get email2AddressType(): string {
     return this.getNamedStringItem(OutlookProperties.PidLidEmail2DisplayName)
@@ -1055,7 +965,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842205.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get email2EmailAddress(): string {
     return this.getNamedStringItem(OutlookProperties.PidLidEmail2EmailAddress)
@@ -1066,7 +975,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc765618.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get email2OriginalDisplayName(): string {
     return this.getNamedStringItem(
@@ -1079,7 +987,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815669.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get email3DisplayName(): string {
     return this.getNamedStringItem(OutlookProperties.PidLidEmail3DisplayName)
@@ -1090,7 +997,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842438.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get email3AddressType(): string {
     return this.getNamedStringItem(OutlookProperties.PidLidEmail3AddressType)
@@ -1101,7 +1007,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815504.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get email3EmailAddress(): string {
     return this.getNamedStringItem(OutlookProperties.PidLidEmail3EmailAddress)
@@ -1112,7 +1017,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815833.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get email3OriginalDisplayName(): string {
     return this.getNamedStringItem(
@@ -1125,7 +1029,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842026.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get fax1AddressType(): string {
     return this.getNamedStringItem(OutlookProperties.PidLidFax1AddressType)
@@ -1136,7 +1039,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc765813.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get fax1EmailAddress(): string {
     return this.getNamedStringItem(OutlookProperties.PidLidFax1EmailAddress)
@@ -1147,7 +1049,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc765694.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get fax1OriginalDisplayName(): string {
     return this.getNamedStringItem(
@@ -1160,7 +1061,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc839741.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get fax2AddressType(): string {
     return this.getNamedStringItem(OutlookProperties.PidLidFax2AddressType)
@@ -1171,7 +1071,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc765668.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get fax2EmailAddress(): string {
     return this.getNamedStringItem(OutlookProperties.PidLidFax2EmailAddress)
@@ -1182,7 +1081,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842101.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get fax2OriginalDisplayName(): string {
     return this.getNamedStringItem(
@@ -1195,7 +1093,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc839752.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get fax3AddressType(): string {
     return this.getNamedStringItem(OutlookProperties.PidLidFax3AddressType)
@@ -1206,7 +1103,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842217.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get fax3EmailAddress(): string {
     return this.getNamedStringItem(OutlookProperties.PidLidFax3EmailAddress)
@@ -1217,7 +1113,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc765682.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get fax3OriginalDisplayName(): string {
     return this.getNamedStringItem(
@@ -1230,7 +1125,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc765766.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTContact
    */
   public get freeBusyLocation(): string {
     return this.getNamedStringItem(OutlookProperties.PidLidFreeBusyLocation)
@@ -1241,7 +1135,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842301.aspx
    * @readonly
    * @type {Date}
-   * @memberof PSTContact
    */
   public get birthday(): Date | null {
     return this.getDateItem(OutlookProperties.PidTagBirthday)
@@ -1252,7 +1145,6 @@ export class PSTContact extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842132.aspx
    * @readonly
    * @type {Date}
-   * @memberof PSTContact
    */
   public get anniversary(): Date | null {
     return this.getDateItem(OutlookProperties.PidTagWeddingAnniversary)
@@ -1297,7 +1189,6 @@ export class PSTContact extends PSTMessage {
   /**
    * JSON stringify the object properties.
    * @returns {string}
-   * @memberof PSTContact
    */
   public toJSON(): any {
     const clone = Object.assign(

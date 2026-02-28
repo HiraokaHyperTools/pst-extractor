@@ -5,6 +5,7 @@ import { PropertyValueResolverV1 } from './PropertyValueResolverV1.js';
 import { processNameToIDMap } from './PAUtil.js';
 import type { PSTOpts } from './PSTOpts.js';
 import { PSTUtil } from './PSTUtil.class.js';
+import type { IPSTFile } from './IPSTFile.js';
 
 /**
  * Open pst/ost file from os file path.
@@ -16,7 +17,7 @@ import { PSTUtil } from './PSTUtil.class.js';
 export async function openPstFile(
   path: string,
   opts?: PSTOpts
-): Promise<PSTFile> {
+): Promise<IPSTFile> {
   const file = await fs.promises.open(path, "r");
 
   async function readFile(
@@ -48,7 +49,7 @@ export async function openPstFile(
 export async function openPst(
   api: ReadFileApi,
   opts?: PSTOpts
-): Promise<PSTFile> {
+): Promise<IPSTFile> {
   const lowPst = await openLowPst(api);
 
   const convertAnsiString = (opts && opts.convertAnsiString)

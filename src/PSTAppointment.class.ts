@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type { IPSTAppointment } from './IPSTAppointment.js';
 import { OutlookProperties } from './OutlookProperties.js';
 import type { PropertyFinder } from './PAUtil.js';
 import type { PLNode } from './PLNode.js';
@@ -8,7 +9,7 @@ import { PSTMessage } from './PSTMessage.class.js';
 import type { RootProvider } from './RootProvider.js';
 
 // PSTAppointment is for Calendar items
-export class PSTAppointment extends PSTMessage {
+export class PSTAppointment extends PSTMessage implements IPSTAppointment {
   /**
    * 
    * @internal
@@ -27,7 +28,6 @@ export class PSTAppointment extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc839802.aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTAppointment
    */
   public get sendAsICAL(): boolean {
     return this.getBooleanItem(
@@ -43,7 +43,6 @@ export class PSTAppointment extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc841972.aspx
    * @readonly
    * @type {number}
-   * @memberof PSTAppointment
    */
   public get busyStatus(): number {
     return this.getIntItem(
@@ -59,7 +58,6 @@ export class PSTAppointment extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc841972.aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTAppointment
    */
   public get showAsBusy(): boolean {
     return this.busyStatus == 2
@@ -70,7 +68,6 @@ export class PSTAppointment extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842419.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTAppointment
    */
   public get location(): string {
     return this.getStringItem(
@@ -86,7 +83,6 @@ export class PSTAppointment extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc839929.aspx
    * @readonly
    * @type {Date}
-   * @memberof PSTAppointment
    */
   public get startTime(): Date | null {
     return this.getDateItem(
@@ -102,7 +98,6 @@ export class PSTAppointment extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815864.aspx
    * @readonly
    * @type {Date}
-   * @memberof PSTAppointment
    */
   public get endTime(): Date | null {
     return this.getDateItem(
@@ -118,7 +113,6 @@ export class PSTAppointment extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842287.aspx
    * @readonly
    * @type {number}
-   * @memberof PSTAppointment
    */
   public get duration(): number {
     return this.getIntItem(
@@ -134,7 +128,6 @@ export class PSTAppointment extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842274.aspx
    * @readonly
    * @type {number}
-   * @memberof PSTAppointment
    */
   public get color(): number {
     return this.getIntItem(
@@ -150,7 +143,6 @@ export class PSTAppointment extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc839901.aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTAppointment
    */
   public get subType(): boolean {
     return (
@@ -168,7 +160,6 @@ export class PSTAppointment extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc765762.aspx
    * @readonly
    * @type {number}
-   * @memberof PSTAppointment
    */
   public get meetingStatus(): number {
     return this.getIntItem(
@@ -184,7 +175,6 @@ export class PSTAppointment extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc839923.aspx
    * @readonly
    * @type {number}
-   * @memberof PSTAppointment
    */
   public get responseStatus(): number {
     return this.getIntItem(
@@ -200,7 +190,6 @@ export class PSTAppointment extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc765772.aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTAppointment
    */
   public get isRecurring(): boolean {
     return this.getBooleanItem(
@@ -216,7 +205,6 @@ export class PSTAppointment extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842450.aspx
    * @readonly
    * @type {Date}
-   * @memberof PSTAppointment
    */
   public get recurrenceBase(): Date | null {
     return this.getDateItem(
@@ -232,7 +220,6 @@ export class PSTAppointment extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842135.aspx
    * @readonly
    * @type {number}
-   * @memberof PSTAppointment
    */
   public get recurrenceType(): number {
     return this.getIntItem(
@@ -248,7 +235,6 @@ export class PSTAppointment extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815733.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTAppointment
    */
   public get recurrencePattern(): string {
     return this.getStringItem(
@@ -264,7 +250,6 @@ export class PSTAppointment extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842017.aspx
    * @readonly
    * @type {Buffer}
-   * @memberof PSTAppointment
    */
   public get recurrenceStructure(): Buffer | null {
     return this.getBinaryItem(
@@ -280,7 +265,6 @@ export class PSTAppointment extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815376.aspx
    * @readonly
    * @type {Buffer}
-   * @memberof PSTAppointment
    */
   public get timezone(): Buffer | null {
     return this.getBinaryItem(
@@ -296,7 +280,6 @@ export class PSTAppointment extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815418.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTAppointment
    */
   public get allAttendees(): string {
     return this.getStringItem(
@@ -312,7 +295,6 @@ export class PSTAppointment extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842502.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTAppointment
    */
   public get toAttendees(): string {
     return this.getStringItem(
@@ -328,7 +310,6 @@ export class PSTAppointment extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc839636.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTAppointment
    */
   public get ccAttendees(): string {
     return this.getStringItem(
@@ -344,7 +325,6 @@ export class PSTAppointment extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc765937.aspx
    * @readonly
    * @type {number}
-   * @memberof PSTAppointment
    */
   public get appointmentSequence(): number {
     return this.getIntItem(
@@ -360,7 +340,6 @@ export class PSTAppointment extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/ee200872(v=exchg.80).aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTAppointment
    */
   public get isOnlineMeeting(): boolean {
     return this.getBooleanItem(
@@ -376,7 +355,6 @@ export class PSTAppointment extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/ee158396(v=exchg.80).aspx
    * @readonly
    * @type {number}
-   * @memberof PSTAppointment
    */
   public get netMeetingType(): number {
     return this.getIntItem(
@@ -392,7 +370,6 @@ export class PSTAppointment extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/ee201516(v=exchg.80).aspx
    * @readonly
    * @type {string}
-   * @memberof PSTAppointment
    */
   public get netMeetingServer(): string {
     return this.getStringItem(
@@ -408,7 +385,6 @@ export class PSTAppointment extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/ee203317(v=exchg.80).aspx
    * @readonly
    * @type {string}
-   * @memberof PSTAppointment
    */
   public get netMeetingOrganizerAlias(): string {
     return this.getStringItem(
@@ -424,7 +400,6 @@ export class PSTAppointment extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/ee204395(v=exchg.80).aspx
    * @readonly
    * @type {string}
-   * @memberof PSTAppointment
    */
   public get netMeetingDocumentPathName(): string {
     return this.getStringItem(
@@ -440,7 +415,6 @@ export class PSTAppointment extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/ee179451(v=exchg.80).aspx
    * @readonly
    * @type {string}
-   * @memberof PSTAppointment
    */
   public get netShowURL(): string {
     return this.getStringItem(
@@ -456,7 +430,6 @@ export class PSTAppointment extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/ee237112(v=exchg.80).aspx
    * @readonly
    * @type {Date}
-   * @memberof PSTAppointment
    */
   public get attendeeCriticalChange(): Date | null {
     return this.getDateItem(
@@ -472,7 +445,6 @@ export class PSTAppointment extends PSTMessage {
    * https://msdn.microsoft.com/en-us/magazine/cc815846.aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTAppointment
    */
   public get appointmentCounterProposal(): boolean {
     return this.getBooleanItem(
@@ -488,7 +460,6 @@ export class PSTAppointment extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/ee159822(v=exchg.80).aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTAppointment
    */
   public get isSilent(): boolean {
     return this.getBooleanItem(
@@ -504,7 +475,6 @@ export class PSTAppointment extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/ee160700(v=exchg.80).aspx
    * @readonly
    * @type {string}
-   * @memberof PSTAppointment
    */
   public get requiredAttendees(): string {
     return this.getStringItem(
@@ -520,7 +490,6 @@ export class PSTAppointment extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/ee201602(v=exchg.80).aspx
    * @readonly
    * @type {number}
-   * @memberof PSTAppointment
    */
   public get localeId(): number {
     return this.getIntItem(OutlookProperties.PidTagMessageLocaleId)
@@ -529,7 +498,6 @@ export class PSTAppointment extends PSTMessage {
   /**
    * JSON stringify the object properties.  Large fields (like body) aren't included.
    * @returns {string}
-   * @memberof PSTAppointment
    */
   public toJSON(): any {
     const clone = Object.assign(

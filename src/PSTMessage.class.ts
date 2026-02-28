@@ -17,6 +17,7 @@ import { SingleAsyncProvider } from './SingleAsyncProvider.js';
 import { CollectionAsyncProvider } from './CollectionAsyncProvider.js';
 import type { RootProvider } from './RootProvider.js';
 import { createPUSubNodeFrom, type PUSubNode } from './PUSubNode.js';
+import type { IPSTMessage } from './IPSTMessage.js';
 
 enum PidTagMessageFlags {
   MSGFLAG_READ = 0x01,
@@ -29,7 +30,7 @@ enum PidTagMessageFlags {
   MSGFLAG_RESEND = 0x80,
 }
 
-export class PSTMessage extends PSTObject {
+export class PSTMessage extends PSTObject implements IPSTMessage {
   private _attachmentsProvider: SingleAsyncProvider<CollectionAsyncProvider<PSTAttachment>>;
   private _recipientsProvider: SingleAsyncProvider<CollectionAsyncProvider<PSTRecipient>>;
 
@@ -49,7 +50,6 @@ export class PSTMessage extends PSTObject {
    * @param {PSTFile} rootProvider
    * @param {DescriptorIndexNode} descriptorIndexNode
    * @param {Map<number, PSTDescriptorItem>} [localDescriptorItems]
-   * @memberof PSTMessage
    */
   constructor(
     rootProvider: RootProvider,
@@ -72,7 +72,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/ee160304(v=exchg.80).aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTMessage
    */
   public get isRead(): boolean {
     return (
@@ -87,7 +86,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/ee160304(v=exchg.80).aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTMessage
    */
   public get isUnmodified(): boolean {
     return (
@@ -102,7 +100,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/ee160304(v=exchg.80).aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTMessage
    */
   public get isSubmitted(): boolean {
     return (
@@ -117,7 +114,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/ee160304(v=exchg.80).aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTMessage
    */
   public get isUnsent(): boolean {
     return (
@@ -132,7 +128,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/ee160304(v=exchg.80).aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTMessage
    */
   public get hasAttachments(): boolean {
     return (
@@ -147,7 +142,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/ee160304(v=exchg.80).aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTMessage
    */
   public get isFromMe(): boolean {
     return (
@@ -163,7 +157,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/ee160304(v=exchg.80).aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTMessage
    */
   public get isAssociated(): boolean {
     return (
@@ -178,7 +171,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/ee160304(v=exchg.80).aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTMessage
    */
   public get isResent(): boolean {
     return (
@@ -195,7 +187,6 @@ export class PSTMessage extends PSTObject {
    * Get the recipients table.
    * @readonly
    * @type {number}
-   * @memberof PSTMessage
    */
   public async getNumberOfRecipients(): Promise<number> {
     return (await this.getRecipientsProvider()).count
@@ -205,7 +196,6 @@ export class PSTMessage extends PSTObject {
    * Get specific recipient.
    * @param {number} recipientNumber
    * @returns {PSTRecipient}
-   * @memberof PSTMessage
    */
   public async getRecipient(recipientNumber: number): Promise<PSTRecipient> {
     return (await this.getRecipientsProvider()).get(recipientNumber);
@@ -273,7 +263,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc979208.aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTMessage
    */
   public get isNonReceiptNotificationRequested(): boolean {
     return (
@@ -288,7 +277,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/ms987568(v=exchg.65).aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTMessage
    */
   public get isOriginatorNonDeliveryReportRequested(): boolean {
     return (
@@ -309,7 +297,6 @@ export class PSTMessage extends PSTObject {
    *
    * @readonly
    * @type {number}
-   * @memberof PSTMessage
    */
   public get recipientType(): number {
     return this.getIntItem(OutlookProperties.PR_RECIPIENT_TYPE)
@@ -323,7 +310,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc765874.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get body(): string {
     return this.getStringItem(OutlookProperties.PR_BODY)
@@ -333,7 +319,6 @@ export class PSTMessage extends PSTObject {
    * Plain text body prefix.
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get bodyPrefix(): string {
     return this.getStringItem(0x6619)
@@ -344,7 +329,6 @@ export class PSTMessage extends PSTObject {
    * https://technet.microsoft.com/en-us/library/cc815911
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get bodyRTF(): string {
     const item = this._propertyFinder.findByKey(0x1009);
@@ -364,7 +348,6 @@ export class PSTMessage extends PSTObject {
    * https://technet.microsoft.com/en-us/library/cc815532(v=office.15).aspx
    * @readonly
    * @type {number}
-   * @memberof PSTMessage
    */
   public get rtfSyncBodyCRC(): number {
     return this.getIntItem(OutlookProperties.PR_RTF_SYNC_BODY_CRC)
@@ -375,7 +358,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/windows/desktop/cc842324.aspx
    * @readonly
    * @type {number}
-   * @memberof PSTMessage
    */
   public get rtfSyncBodyCount(): number {
     return this.getIntItem(OutlookProperties.PR_RTF_SYNC_BODY_COUNT)
@@ -386,7 +368,6 @@ export class PSTMessage extends PSTObject {
    * https://technet.microsoft.com/en-us/library/cc815400(v=office.15).aspx
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get rtfSyncBodyTag(): string {
     return this.getStringItem(OutlookProperties.PR_RTF_SYNC_BODY_TAG)
@@ -397,7 +378,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/magazine/cc842437.aspx
    * @readonly
    * @type {number}
-   * @memberof PSTMessage
    */
   public get rtfSyncPrefixCount(): number {
     return this.getIntItem(OutlookProperties.PR_RTF_SYNC_PREFIX_COUNT)
@@ -408,7 +388,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/magazine/cc765795.aspx
    * @readonly
    * @type {number}
-   * @memberof PSTMessage
    */
   public get rtfSyncTrailingCount(): number {
     return this.getIntItem(OutlookProperties.PR_RTF_SYNC_TRAILING_COUNT)
@@ -418,7 +397,6 @@ export class PSTMessage extends PSTObject {
    * Contains the HTML version of the message text.
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get bodyHTML(): string {
     return this.getStringItem(OutlookProperties.PR_BODY_HTML)
@@ -514,7 +492,6 @@ export class PSTMessage extends PSTObject {
    * Number of attachments by counting rows in attachment table.
    * @readonly
    * @type {number}
-   * @memberof PSTMessage
    */
   public async getNumberOfAttachments(): Promise<number> {
     return (await this.getAttachmentsProvider()).count
@@ -524,7 +501,6 @@ export class PSTMessage extends PSTObject {
    * Get specific attachment from table using index.
    * @param {number} attachmentNumber
    * @returns {PSTAttachment}
-   * @memberof PSTMessage
    */
   public async getAttachment(attachmentNumber: number): Promise<PSTAttachment> {
     return (await (await this.getAttachmentsProvider()).get(attachmentNumber));
@@ -542,7 +518,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/cc815346(v=office.12).aspx
    * @readonly
    * @type {number}
-   * @memberof PSTMessage
    */
   public get importance(): number {
     return this.getIntItem(
@@ -556,7 +531,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc765765.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get messageClass(): string {
     return this.getStringItem(OutlookProperties.PR_MESSAGE_CLASS)
@@ -567,7 +541,6 @@ export class PSTMessage extends PSTObject {
    * https://technet.microsoft.com/en-us/library/cc815720
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get subject(): string {
     let subject = this.getStringItem(OutlookProperties.PR_SUBJECT)
@@ -590,7 +563,6 @@ export class PSTMessage extends PSTObject {
    * https://technet.microsoft.com/en-us/library/cc839781
    * @readonly
    * @type {Date}
-   * @memberof PSTMessage
    */
   public get clientSubmitTime(): Date | null {
     return this.getDateItem(OutlookProperties.PR_CLIENT_SUBMIT_TIME)
@@ -601,7 +573,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc840015.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get receivedByName(): string {
     return this.getStringItem(OutlookProperties.PR_RECEIVED_BY_NAME)
@@ -612,7 +583,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc842405.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get sentRepresentingName(): string {
     return this.getStringItem(OutlookProperties.PR_SENT_REPRESENTING_NAME)
@@ -623,7 +593,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc839677.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get sentRepresentingAddressType(): string {
     return this.getStringItem(OutlookProperties.PR_SENT_REPRESENTING_ADDRTYPE)
@@ -634,7 +603,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc839552.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get sentRepresentingEmailAddress(): string {
     return this.getStringItem(
@@ -647,7 +615,6 @@ export class PSTMessage extends PSTObject {
    * https://technet.microsoft.com/en-us/windows/cc839841
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get conversationTopic(): string {
     return this.getStringItem(OutlookProperties.PR_CONVERSATION_TOPIC)
@@ -658,7 +625,6 @@ export class PSTMessage extends PSTObject {
    * https://technet.microsoft.com/en-us/library/cc765641(v=office.14)
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get receivedByAddressType(): string {
     return this.getStringItem(OutlookProperties.PR_RECEIVED_BY_ADDRTYPE)
@@ -669,7 +635,6 @@ export class PSTMessage extends PSTObject {
    * https://technet.microsoft.com/en-us/library/cc839550(v=office.14)
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get receivedByAddress(): string {
     return this.getStringItem(OutlookProperties.PR_RECEIVED_BY_EMAIL_ADDRESS)
@@ -680,7 +645,6 @@ export class PSTMessage extends PSTObject {
    * https://technet.microsoft.com/en-us/library/cc815628
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get transportMessageHeaders(): string {
     return this.getStringItem(OutlookProperties.PR_TRANSPORT_MESSAGE_HEADERS)
@@ -696,7 +660,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc765845.aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTMessage
    */
   public get originatorDeliveryReportRequested(): boolean {
     return (
@@ -711,7 +674,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc765646.aspx
    * @readonly
    * @type {number}
-   * @memberof PSTMessage
    */
   public get priority(): number {
     return this.getIntItem(0x0026)
@@ -722,7 +684,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc842094.aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTMessage
    */
   public get readReceiptRequested(): boolean {
     return this.getIntItem(OutlookProperties.PR_READ_RECEIPT_REQUESTED) != 0
@@ -733,7 +694,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc979216.aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTMessage
    */
   public get recipientReassignmentProhibited(): boolean {
     return (
@@ -747,7 +707,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/cc839694(office.12).aspx
    * @readonly
    * @type {number}
-   * @memberof PSTMessage
    */
   public get originalSensitivity(): number {
     return this.getIntItem(OutlookProperties.PR_ORIGINAL_SENSITIVITY)
@@ -758,7 +717,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc839518.aspx
    * @readonly
    * @type {number}
-   * @memberof PSTMessage
    */
   public get sensitivity(): number {
     return this.getIntItem(OutlookProperties.PR_SENSITIVITY)
@@ -769,7 +727,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/magazine/cc842068.aspx
    * @readonly
    * @type {Buffer}
-   * @memberof PSTMessage
    */
   public get pidTagSentRepresentingSearchKey(): Buffer | null {
     return this.getBinaryItem(OutlookProperties.PR_SENT_REPRESENTING_SEARCH_KEY)
@@ -780,7 +737,6 @@ export class PSTMessage extends PSTObject {
    * https://technet.microsoft.com/en-us/library/cc842260.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get rcvdRepresentingName(): string {
     return this.getStringItem(OutlookProperties.PR_RCVD_REPRESENTING_NAME)
@@ -791,7 +747,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc842182.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get originalSubject(): string {
     return this.getStringItem(OutlookProperties.PR_ORIGINAL_SUBJECT)
@@ -802,7 +757,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/windows/desktop/cc815850.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get replyRecipientNames(): string {
     return this.getStringItem(OutlookProperties.PR_REPLY_RECIPIENT_NAMES)
@@ -813,7 +767,6 @@ export class PSTMessage extends PSTObject {
    * https://technet.microsoft.com/en-us/library/cc815755
    * @readonly
    * @type {boolean}
-   * @memberof PSTMessage
    */
   public get messageToMe(): boolean {
     return this.getIntItem(OutlookProperties.PR_MESSAGE_TO_ME) != 0
@@ -824,7 +777,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc839713.aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTMessage
    */
   public get messageCcMe(): boolean {
     return this.getIntItem(OutlookProperties.PR_MESSAGE_CC_ME) != 0
@@ -835,7 +787,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc842268.aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTMessage
    */
   public get messageRecipMe(): boolean {
     return this.getIntItem(OutlookProperties.PR_MESSAGE_RECIP_ME) != 0
@@ -846,7 +797,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc839921.aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTMessage
    */
   public get responseRequested(): boolean {
     return this.getBooleanItem(OutlookProperties.PR_RESPONSE_REQUESTED)
@@ -857,7 +807,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/magazine/cc815841(v=office.14).aspx
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get originalDisplayBcc(): string {
     return this.getStringItem(OutlookProperties.PR_ORIGINAL_DISPLAY_BCC)
@@ -868,7 +817,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/magazine/cc815841(v=office.14).aspx
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get originalDisplayCc(): string {
     return this.getStringItem(OutlookProperties.PR_ORIGINAL_DISPLAY_CC)
@@ -879,7 +827,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/magazine/cc842235(v=office.14).aspx
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get originalDisplayTo(): string {
     return this.getStringItem(OutlookProperties.PR_ORIGINAL_DISPLAY_TO)
@@ -890,7 +837,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc842447.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get rcvdRepresentingAddrtype(): string {
     return this.getStringItem(OutlookProperties.PR_RCVD_REPRESENTING_ADDRTYPE)
@@ -901,7 +847,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc815875.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get rcvdRepresentingEmailAddress(): string {
     return this.getStringItem(
@@ -914,7 +859,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc815286.aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTMessage
    */
   public get isReplyRequested(): boolean {
     return this.getIntItem(OutlookProperties.PR_REPLY_REQUESTED) != 0
@@ -925,7 +869,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc815625.aspx
    * @readonly
    * @type {Buffer}
-   * @memberof PSTMessage
    */
   public get senderEntryId(): Buffer | null {
     return this.getBinaryItem(OutlookProperties.PR_SENDER_ENTRYID)
@@ -936,7 +879,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc815457.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get senderName(): string {
     return this.getStringItem(OutlookProperties.PR_SENDER_NAME)
@@ -947,7 +889,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc815748.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get senderAddrtype(): string {
     return this.getStringItem(OutlookProperties.PR_SENDER_ADDRTYPE)
@@ -958,7 +899,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc839670.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get senderEmailAddress(): string {
     return this.getStringItem(OutlookProperties.PR_SENDER_EMAIL_ADDRESS)
@@ -969,7 +909,6 @@ export class PSTMessage extends PSTObject {
    * https://technet.microsoft.com/en-us/library/cc842471
    * @readonly
    * @type {long}
-   * @memberof PSTMessage
    */
   public get messageSize(): Long {
     return this.getLongItem(OutlookProperties.PR_MESSAGE_SIZE)
@@ -980,7 +919,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc815718.aspx
    * @readonly
    * @type {number}
-   * @memberof PSTMessage
    */
   public get internetArticleNumber(): number {
     return this.getIntItem(OutlookProperties.PR_INTERNET_ARTICLE_NUMBER)
@@ -991,7 +929,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc815413.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get primarySendAccount(): string {
     return this.getStringItem(OutlookProperties.PR_PRIMARY_SEND_ACCOUNT)
@@ -1002,7 +939,6 @@ export class PSTMessage extends PSTObject {
    * https://technet.microsoft.com/en-us/library/cc842327(v=office.14)
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get nextSendAcct(): string {
     return this.getStringItem(OutlookProperties.PR_NEXT_SEND_ACCT)
@@ -1013,7 +949,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc815487.aspx
    * @readonly
    * @type {number}
-   * @memberof PSTMessage
    */
   public get objectType(): number {
     return this.getIntItem(OutlookProperties.PR_OBJECT_TYPE)
@@ -1024,7 +959,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc842353.aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTMessage
    */
   public get deleteAfterSubmit(): boolean {
     return this.getIntItem(OutlookProperties.PR_DELETE_AFTER_SUBMIT) != 0
@@ -1035,7 +969,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc765767.aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTMessage
    */
   public get responsibility(): boolean {
     return this.getIntItem(OutlookProperties.PR_RESPONSIBILITY) != 0
@@ -1046,7 +979,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc765844.aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTMessage
    */
   public get isRTFInSync(): boolean {
     return this.getIntItem(OutlookProperties.PR_RTF_IN_SYNC) != 0
@@ -1057,7 +989,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc815730.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get displayBCC(): string {
     return this.getStringItem(OutlookProperties.PR_DISPLAY_BCC)
@@ -1068,7 +999,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc765528.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get displayCC(): string {
     return this.getStringItem(OutlookProperties.PR_DISPLAY_CC)
@@ -1079,7 +1009,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc839687.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get displayTo(): string {
     return this.getStringItem(OutlookProperties.PR_DISPLAY_TO)
@@ -1090,7 +1019,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc841961.aspx
    * @readonly
    * @type {Date}
-   * @memberof PSTMessage
    */
   public get messageDeliveryTime(): Date | null {
     return this.getDateItem(OutlookProperties.PR_MESSAGE_DELIVERY_TIME)
@@ -1101,7 +1029,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc839521.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get internetMessageId(): string {
     return this.getStringItem(OutlookProperties.PR_INTERNET_MESSAGE_ID)
@@ -1112,7 +1039,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc839776.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get inReplyToId(): string {
     return this.getStringItem(OutlookProperties.PR_IN_REPLY_TO_ID)
@@ -1123,7 +1049,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc765856.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get returnPath(): string {
     return this.getStringItem(OutlookProperties.PR_INTERNET_RETURN_PATH)
@@ -1134,7 +1059,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc815472.aspx
    * @readonly
    * @type {number}
-   * @memberof PSTMessage
    */
   public get iconIndex(): number {
     return this.getIntItem(OutlookProperties.PR_ICON_INDEX)
@@ -1146,7 +1070,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc841968.aspx
    * @readonly
    * @type {number}
-   * @memberof PSTMessage
    */
   public get lastVerbExecuted(): number {
     return this.getIntItem(OutlookProperties.PR_LAST_VERB_EXECUTED)
@@ -1157,7 +1080,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc839918.aspx
    * @readonly
    * @type {Date}
-   * @memberof PSTMessage
    */
   public get lastVerbExecutionTime(): Date | null {
     return this.getDateItem(OutlookProperties.PR_LAST_VERB_EXECUTION_TIME)
@@ -1168,7 +1090,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc815653.aspx
    * @readonly
    * @type {String}
-   * @memberof PSTMessage
    */
   public get urlCompName(): string {
     return this.getStringItem(OutlookProperties.PR_URL_COMP_NAME)
@@ -1179,7 +1100,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/ee159038(v=exchg.80).aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTMessage
    */
   public get attrHidden(): boolean {
     return this.getIntItem(OutlookProperties.PR_ATTR_HIDDEN) != 0
@@ -1190,7 +1110,6 @@ export class PSTMessage extends PSTObject {
    * https://technet.microsoft.com/en-us/library/cc815922(v=office.12).aspx
    * @readonly
    * @type {Date}
-   * @memberof PSTMessage
    */
   public get taskStartDate(): Date | null {
     return this.getDateItem(
@@ -1206,7 +1125,6 @@ export class PSTMessage extends PSTObject {
    * https://technet.microsoft.com/en-us/library/cc839641(v=office.12).aspx
    * @readonly
    * @type {Date}
-   * @memberof PSTMessage
    */
   public get taskDueDate(): Date | null {
     return this.getDateItem(
@@ -1222,7 +1140,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc765589.aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTMessage
    */
   public get reminderSet(): boolean {
     return this.getBooleanItem(
@@ -1238,7 +1155,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc765535.aspx
    * @readonly
    * @type {number}
-   * @memberof PSTMessage
    */
   public get reminderDelta(): number {
     return this.getIntItem(
@@ -1253,7 +1169,6 @@ export class PSTMessage extends PSTObject {
    * Color categories
    * @readonly
    * @type {string[]}
-   * @memberof PSTMessage
    */
   public get colorCategories(): string[] {
     const keywordCategory: number = this._rootProvider.getStringToIdMapItem(
@@ -1311,7 +1226,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/ee204279(v=exchg.80).aspx
    * @readonly
    * @type {Buffer}
-   * @memberof PSTMessage
    */
   public get conversationId(): Buffer | null {
     return this.getBinaryItem(OutlookProperties.PidTagConversationId)
@@ -1322,7 +1236,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/ee218393(v=exchg.80).aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTMessage
    */
   public get isConversationIndexTracking(): boolean {
     return this.getBooleanItem(
@@ -1336,7 +1249,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc842372.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get emailAddress(): string {
     return this.getStringItem(OutlookProperties.PR_EMAIL_ADDRESS)
@@ -1347,7 +1259,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc815548.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get addrType(): string {
     return this.getStringItem(OutlookProperties.PR_ADDRTYPE)
@@ -1358,7 +1269,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc842022.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTMessage
    */
   public get comment(): string {
     return this.getStringItem(OutlookProperties.PR_COMMENT)
@@ -1369,7 +1279,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc765677.aspx
    * @readonly
    * @type {Date}
-   * @memberof PSTMessage
    */
   public get creationTime(): Date | null {
     return this.getDateItem(OutlookProperties.PR_CREATION_TIME)
@@ -1380,7 +1289,6 @@ export class PSTMessage extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc815689.aspx
    * @readonly
    * @type {Date}
-   * @memberof PSTMessage
    */
   public get modificationTime(): Date | null {
     return this.getDateItem(OutlookProperties.PR_LAST_MODIFICATION_TIME)
@@ -1396,7 +1304,6 @@ export class PSTMessage extends PSTObject {
   /**
    * JSON stringify the object properties.  Large fields (like body) aren't included.
    * @returns {string}
-   * @memberof PSTMessage
    */
   public toJSON(): any {
     const clone = Object.assign(

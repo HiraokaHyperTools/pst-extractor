@@ -532,7 +532,6 @@ export class PSTUtil {
    * @param {number} [start]
    * @param {number} [end]
    * @returns {long}
-   * @memberof PSTUtil
    */
   public static convertLittleEndianBytesToLong(
     data: Buffer,
@@ -564,7 +563,6 @@ export class PSTUtil {
    * @param {number} [start]
    * @param {number} [end]
    * @returns {long}
-   * @memberof PSTUtil
    */
   public static convertBigEndianBytesToLong(
     data: Buffer,
@@ -593,7 +591,6 @@ export class PSTUtil {
    * @static
    * @param {number} propertyId
    * @returns
-   * @memberof PSTUtil
    */
   public static getInternetCodePageCharset(
     propertyId: number
@@ -609,7 +606,6 @@ export class PSTUtil {
    * @param {Buffer} dest
    * @param {number} destPos
    * @param {number} length
-   * @memberof PSTUtil
    */
   public static arraycopy(
     src: Buffer,
@@ -631,7 +627,6 @@ export class PSTUtil {
    * Determine if character is alphanumeric
    *
    * @static
-   * @memberof PSTUtil
    */
   public static isAlphaNumeric = (ch: string): boolean => {
     return ch.match(/^[a-z0-9]+$/i) !== null
@@ -642,7 +637,6 @@ export class PSTUtil {
    * @static
    * @param {Buffer} data
    * @returns {Buffer}
-   * @memberof PSTUtil
    */
   public static decode(data: Buffer): Buffer {
     let temp
@@ -659,7 +653,6 @@ export class PSTUtil {
    * @static
    * @param {Buffer} data
    * @returns {Buffer}
-   * @memberof PSTUtil
    */
   public static decodeArray(data: Uint8Array): Uint8Array {
     let temp
@@ -680,7 +673,6 @@ export class PSTUtil {
    * @param {PSTTableBC} table
    * @param {Map<number, PSTDescriptorItem>} localDescriptorItems
    * @returns {PSTMessage}
-   * @memberof PSTUtil
    */
   public static async createAppropriatePSTMessageObject(
     rootProvider: RootProvider,
@@ -892,7 +884,6 @@ export class PSTUtil {
    * @param {long} hi
    * @param {long} low
    * @returns {Date}
-   * @memberof PSTUtil
    */
   public static filetimeToDate(hi: Long, low: Long): Date {
     const h: Long = hi.shiftLeft(32)

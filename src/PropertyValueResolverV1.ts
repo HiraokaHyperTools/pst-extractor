@@ -317,6 +317,9 @@ function mixIntoOne(array: ArrayBuffer[]): ArrayBuffer {
   }
 }
 
+/**
+ * @internal
+ */
 export class PropertyValueResolverV1 implements PropertyValueResolver {
   private convertAnsiString: (data: Uint8Array) => Promise<string>;
   private provideTypeConverterOf: ((type: number) => PrimitiveTypeConverter | undefined);

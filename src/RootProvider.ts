@@ -4,6 +4,9 @@ import type { PropertyValueResolver } from "./PropertyValueResolver.js";
 import { PSTFolder } from "./PSTFolder.class.js";
 import { PSTMessage } from "./PSTMessage.class.js";
 
+/**
+ * @internal
+ */
 export interface RootProvider {
   resolver: PropertyValueResolver;
   getNameToIdMapItem(key: number, idx: number): number;

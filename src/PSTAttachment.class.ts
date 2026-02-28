@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type { IPSTAttachment } from './IPSTAttachment.js';
 import { OutlookProperties } from './OutlookProperties.js';
 import type { PropertyFinder } from './PAUtil.js';
 import type { PLNode } from './PLNode.js';
@@ -11,7 +12,7 @@ import { PSTUtil } from './PSTUtil.class.js';
 import type { RootProvider } from './RootProvider.js';
 
 // Class containing attachment information.
-export class PSTAttachment extends PSTObject {
+export class PSTAttachment extends PSTObject implements IPSTAttachment {
   public static ATTACHMENT_METHOD_NONE = 0
   public static ATTACHMENT_METHOD_BY_VALUE = 1
   public static ATTACHMENT_METHOD_BY_REFERENCE = 2
@@ -25,7 +26,6 @@ export class PSTAttachment extends PSTObject {
    * @internal
    * @param {PSTFile} rootProvider
    * @param {Map<number, PSTDescriptorItem>} localDescriptorItems
-   * @memberof PSTAttachment
    */
   constructor(
     rootProvider: RootProvider,
@@ -41,7 +41,6 @@ export class PSTAttachment extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/gg156074(v=winembedded.70).aspx
    * @readonly
    * @type {number}
-   * @memberof PSTAttachment
    */
   public get size(): number {
     return this.getIntItem(OutlookProperties.PR_ATTACH_SIZE)
@@ -52,7 +51,6 @@ export class PSTAttachment extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc765677.aspx
    * @readonly
    * @type {Date}
-   * @memberof PSTAttachment
    */
   public get creationTime(): Date | null {
     return this.getDateItem(OutlookProperties.PR_CREATION_TIME)
@@ -63,7 +61,6 @@ export class PSTAttachment extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc815689.aspx
    * @readonly
    * @type {Date}
-   * @memberof PSTAttachment
    */
   public get modificationTime(): Date | null {
     return this.getDateItem(OutlookProperties.PR_LAST_MODIFICATION_TIME)
@@ -73,7 +70,6 @@ export class PSTAttachment extends PSTObject {
    * Get an embedded message.
    * @readonly
    * @type {PSTMessage}
-   * @memberof PSTAttachment
    */
   public async getEmbeddedPSTMessage(): Promise<PSTMessage | null> {
     const attachMethod = this._propertyFinder.findByKey(0x3705)?.value;
@@ -140,7 +136,6 @@ export class PSTAttachment extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/gg154634(v=winembedded.70).aspx
    * @readonly
    * @type {number}
-   * @memberof PSTAttachment
    */
   public get filesize(): number {
     const attachmentDataObject = this._propertyFinder.findByKey(
@@ -163,7 +158,6 @@ export class PSTAttachment extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc842517.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTAttachment
    */
   public get filename(): string {
     return this.getStringItem(OutlookProperties.PR_ATTACH_FILENAME)
@@ -182,7 +176,6 @@ export class PSTAttachment extends PSTObject {
    *
    * @readonly
    * @type {number}
-   * @memberof PSTAttachment
    */
   public get attachMethod(): number {
     return this.getIntItem(OutlookProperties.PR_ATTACH_METHOD)
@@ -193,7 +186,6 @@ export class PSTAttachment extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc841969.aspx
    * @readonly
    * @type {number}
-   * @memberof PSTAttachment
    */
   public get attachNum(): number {
     return this.getIntItem(OutlookProperties.PR_ATTACH_NUM)
@@ -204,7 +196,6 @@ export class PSTAttachment extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc842157.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTAttachment
    */
   public get longFilename(): string {
     return this.getStringItem(OutlookProperties.PR_ATTACH_LONG_FILENAME)
@@ -215,7 +206,6 @@ export class PSTAttachment extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc839889.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTAttachment
    */
   public get pathname(): string {
     return this.getStringItem(OutlookProperties.PR_ATTACH_PATHNAME)
@@ -226,7 +216,6 @@ export class PSTAttachment extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc842381.aspx
    * @readonly
    * @type {number}
-   * @memberof PSTAttachment
    */
   public get renderingPosition(): number {
     return this.getIntItem(OutlookProperties.PR_RENDERING_POSITION)
@@ -237,7 +226,6 @@ export class PSTAttachment extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc815443.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTAttachment
    */
   public get longPathname(): string {
     return this.getStringItem(OutlookProperties.PR_ATTACH_LONG_PATHNAME)
@@ -248,7 +236,6 @@ export class PSTAttachment extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc842516.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTAttachment
    */
   public get mimeTag(): string {
     return this.getStringItem(OutlookProperties.PR_ATTACH_MIME_TAG)
@@ -259,7 +246,6 @@ export class PSTAttachment extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc963256.aspx
    * @readonly
    * @type {number}
-   * @memberof PSTAttachment
    */
   public get mimeSequence(): number {
     return this.getIntItem(OutlookProperties.PR_ATTACH_MIME_SEQUENCE)
@@ -270,7 +256,6 @@ export class PSTAttachment extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc765868.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTAttachment
    */
   public get contentId(): string {
     return this.getStringItem(OutlookProperties.PR_ATTACH_CONTENT_ID)
@@ -281,7 +266,6 @@ export class PSTAttachment extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc765876.aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTAttachment
    */
   public get isAttachmentInvisibleInHtml(): boolean {
     const actionFlag = this.getIntItem(OutlookProperties.PR_ATTACH_FLAGS)
@@ -293,7 +277,6 @@ export class PSTAttachment extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc765876.aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTAttachment
    */
   public get isAttachmentInvisibleInRTF(): boolean {
     const actionFlag = this.getIntItem(OutlookProperties.PR_ATTACH_FLAGS)
@@ -303,7 +286,6 @@ export class PSTAttachment extends PSTObject {
   /**
    * JSON stringify the object properties.
    * @returns {string}
-   * @memberof PSTAttachment
    */
   public toJSON(): any {
     const clone = Object.assign(

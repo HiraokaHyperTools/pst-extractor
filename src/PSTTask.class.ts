@@ -7,15 +7,15 @@ import type { PLNode } from './PLNode.js';
 import type { PropertyFinder } from './PAUtil.js';
 import type { PLSubNode } from './PLSubNode.js';
 import type { RootProvider } from './RootProvider.js';
+import type { IPSTTask } from './IPSTTask.js';
 
-export class PSTTask extends PSTMessage {
+export class PSTTask extends PSTMessage implements IPSTTask {
   /**
    * Creates an instance of PSTTask.
    * @internal
    * @param {PSTFile} rootProvider
    * @param {DescriptorIndexNode} descriptorIndexNode
    * @param {Map<number, PSTDescriptorItem>} [localDescriptorItems]
-   * @memberof PSTTask
    */
   constructor(
     rootProvider: RootProvider,
@@ -31,7 +31,6 @@ export class PSTTask extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842120.aspx
    * @readonly
    * @type {number}
-   * @memberof PSTTask
    */
   public get taskStatus(): number {
     return this.getIntItem(
@@ -47,7 +46,6 @@ export class PSTTask extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc839932.aspx
    * @readonly
    * @type {number}
-   * @memberof PSTTask
    */
   public get percentComplete(): number {
     return this.getDoubleItem(
@@ -63,7 +61,6 @@ export class PSTTask extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815753.aspx
    * @readonly
    * @type {Date}
-   * @memberof PSTTask
    */
   public get taskDateCompleted(): Date | null {
     return this.getDateItem(
@@ -79,7 +76,6 @@ export class PSTTask extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842253.aspx
    * @readonly
    * @type {number}
-   * @memberof PSTTask
    */
   public get taskActualEffort(): number {
     return this.getIntItem(
@@ -95,7 +91,6 @@ export class PSTTask extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842485.aspx
    * @readonly
    * @type {number}
-   * @memberof PSTTask
    */
   public get taskEstimatedEffort(): number {
     return this.getIntItem(
@@ -111,7 +106,6 @@ export class PSTTask extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815510.aspx
    * @readonly
    * @type {number}
-   * @memberof PSTTask
    */
   public get taskVersion(): number {
     return this.getIntItem(
@@ -127,7 +121,6 @@ export class PSTTask extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc839514.aspx
    * @readonly
    * @type {boolean}
-   * @memberof PSTTask
    */
   public get isTaskComplete(): boolean {
     return this.getBooleanItem(
@@ -143,7 +136,6 @@ export class PSTTask extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842363.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTTask
    */
   public get taskOwner(): string {
     return this.getStringItem(
@@ -159,7 +151,6 @@ export class PSTTask extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc815865.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTTask
    */
   public get taskAssigner(): string {
     return this.getStringItem(
@@ -175,7 +166,6 @@ export class PSTTask extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842278.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTTask
    */
   public get taskLastUser(): string {
     return this.getStringItem(
@@ -191,7 +181,6 @@ export class PSTTask extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc765654.aspx
    * @readonly
    * @type {number}
-   * @memberof PSTTask
    */
   public get taskOrdinal(): number {
     return this.getIntItem(
@@ -206,7 +195,6 @@ export class PSTTask extends PSTMessage {
    * Indicates whether the task includes a recurrence pattern.
    * https://msdn.microsoft.com/en-us/library/office/cc765875.aspx
    * @type {boolean}
-   * @memberof PSTTask
    */
   public get isTaskRecurring(): boolean {
     return this.getBooleanItem(
@@ -220,7 +208,6 @@ export class PSTTask extends PSTMessage {
   /**
    * https://docs.microsoft.com/en-us/office/client-developer/outlook/mapi/pidlidtaskrecurrence-canonical-property
    * @type {RecurrencePattern}
-   * @memberof PSTTask
    */
   public get taskRecurrencePattern(): RecurrencePattern | null {
     const recurrenceBLOB = this.getBinaryItem(
@@ -235,7 +222,6 @@ export class PSTTask extends PSTMessage {
   /**
    * https://docs.microsoft.com/en-us/office/client-developer/outlook/mapi/pidlidtaskdeadoccurrence-canonical-property
    * @type {boolean}
-   * @memberof PSTTask
    */
   public get taskDeadOccurrence(): boolean {
     return this.getBooleanItem(
@@ -251,7 +237,6 @@ export class PSTTask extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc842113.aspx
    * @readonly
    * @type {number}
-   * @memberof PSTTask
    */
   public get taskOwnership(): number {
     return this.getIntItem(
@@ -267,7 +252,6 @@ export class PSTTask extends PSTMessage {
    * https://msdn.microsoft.com/en-us/library/office/cc839689.aspx
    * @readonly
    * @type {number}
-   * @memberof PSTTask
    */
   public get acceptanceState(): number {
     return this.getIntItem(
@@ -281,7 +265,6 @@ export class PSTTask extends PSTMessage {
   /**
    * JSON stringify the object properties.
    * @returns {string}
-   * @memberof PSTTask
    */
   public toJSON(): any {
     const clone = Object.assign(

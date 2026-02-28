@@ -11,6 +11,9 @@ import { getPropertyContext } from "./PropertyContextUtil.js";
 import type { PropertyValueResolver } from "./PropertyValueResolver.js";
 import { PSTUtil } from "./PSTUtil.class.js";
 
+/**
+ * @internal
+ */
 export interface PropertyFinder {
   findByKey(key: number): Property | undefined;
   all(): Property[];
@@ -37,6 +40,7 @@ const guidMap: Map<string, number> = new Map([
 /**
  * Process name to ID map.
  * 
+ * @internal
  * @param nameToIdMapDescriptorNode nodeId 97
  */
 export async function processNameToIDMap(
@@ -156,6 +160,9 @@ export async function processNameToIDMap(
   return nodeMap;
 }
 
+/**
+ * @internal
+ */
 export function createPropertyFinder(props: Property[]): PropertyFinder {
   return {
     findByKey(key) {

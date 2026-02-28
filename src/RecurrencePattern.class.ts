@@ -1,3 +1,5 @@
+import type { IRecurrencePattern } from "./IRecurrencePattern.js"
+
 const OFFSETS = {
   RecurFrequency: 4,
   PatternType: 6,
@@ -46,7 +48,7 @@ export type MonthNthSpecific = {
   nth: NthOccurrence
 }
 
-export class RecurrencePattern {
+export class RecurrencePattern implements IRecurrencePattern {
   public recurFrequency: RecurFrequency
   public patternType: PatternType
   public firstDateTime: Date

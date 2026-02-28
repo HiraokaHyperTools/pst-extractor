@@ -16,6 +16,7 @@ import type { FasterEmail } from './FasterEmail.js';
 import { getPropertyContext } from './PropertyContextUtil.js';
 import type { PropertyValueResolver } from './PropertyValueResolver.js';
 import { createPUNodeFrom, type PUNode } from './PUNode.js';
+import type { IPSTFolder } from './IPSTFolder.js';
 
 export interface GetFasterEmailListOptions {
   progress?: (current: number, count: number) => void;
@@ -25,11 +26,8 @@ export interface GetFasterEmailListOptions {
  * Represents a folder in the PST File.  Allows you to access child folders or items.
  * Items are accessed through a sort of cursor arrangement.  This allows for
  * incremental reading of a folder which may have _lots_ of emails.
- * @export
- * @class PSTFolder
- * @extends {PSTObject}
  */
-export class PSTFolder extends PSTObject {
+export class PSTFolder extends PSTObject implements IPSTFolder {
   private _subFoldersProvider: SingleAsyncProvider<CollectionAsyncProvider<PSTFolder>>;
   private _emailsProvider: SingleAsyncProvider<CollectionAsyncProvider<PSTMessage>>;
 
@@ -42,7 +40,6 @@ export class PSTFolder extends PSTObject {
    * @param {PSTFile} rootProvider
    * @param {DescriptorIndexNode} descriptorIndexNode
    * @param {Map<number, PSTDescriptorItem>} [localDescriptorItems]
-   * @memberof PSTFolder
    */
   constructor(
     rootProvider: RootProvider,
@@ -208,7 +205,6 @@ export class PSTFolder extends PSTObject {
   /**
    * Get folders in one fell swoop, since there's not usually thousands of them.
    * @returns {PSTFolder[]}
-   * @memberof PSTFolder
    */
   public async getSubFolders(): Promise<PSTFolder[]> {
     return await (await this.getSubFoldersProvider()).all();
@@ -222,7 +218,6 @@ export class PSTFolder extends PSTObject {
    * The number of child folders in this folder
    * @readonly
    * @type {number}
-   * @memberof PSTFolder
    */
   public async getSubFolderCount(): Promise<number> {
     return (await this.getSubFoldersProvider()).count;
@@ -232,7 +227,6 @@ export class PSTFolder extends PSTObject {
    * Number of emails in this folder
    * @readonly
    * @type {number}
-   * @memberof PSTFolder
    */
   public async getEmailCount(): Promise<number> {
     return (await this.getEmailsProvider()).count;
@@ -315,7 +309,6 @@ export class PSTFolder extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc815373.aspx
    * @readonly
    * @type {number}
-   * @memberof PSTFolder
    */
   public get folderType(): number {
     return this.getIntItem(OutlookProperties.PR_FOLDER_TYPE)
@@ -326,7 +319,6 @@ export class PSTFolder extends PSTObject {
    * For a number calculated by the library use getEmailCount
    * @readonly
    * @type {number}
-   * @memberof PSTFolder
    */
   public get contentCount(): number {
     return this.getIntItem(OutlookProperties.PR_CONTENT_COUNT)
@@ -337,7 +329,6 @@ export class PSTFolder extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc841964.aspx
    * @readonly
    * @type {number}
-   * @memberof PSTFolder
    */
   public get unreadCount(): number {
     return this.getIntItem(OutlookProperties.PR_CONTENT_UNREAD)
@@ -348,7 +339,6 @@ export class PSTFolder extends PSTObject {
    * once again, read from the PST, use getSubFolderCount if you want to know
    * @readonly
    * @type {boolean}
-   * @memberof PSTFolder
    */
   public get hasSubfolders(): boolean {
     return false
@@ -363,7 +353,6 @@ export class PSTFolder extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc839839.aspx
    * @readonly
    * @type {string}
-   * @memberof PSTFolder
    */
   public get containerClass(): string {
     return this.getStringItem(OutlookProperties.PR_CONTAINER_CLASS)
@@ -374,7 +363,6 @@ export class PSTFolder extends PSTObject {
    * https://msdn.microsoft.com/en-us/library/office/cc839610.aspx
    * @readonly
    * @type {number}
-   * @memberof PSTFolder
    */
   public get containerFlags(): number {
     return this.getIntItem(OutlookProperties.PR_CONTAINER_FLAGS)
@@ -390,7 +378,6 @@ export class PSTFolder extends PSTObject {
   /**
    * JSON stringify the object properties.
    * @returns {string}
-   * @memberof PSTFolder
    */
   public toJSON(): any {
     const clone = Object.assign(
