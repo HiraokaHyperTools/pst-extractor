@@ -1,20 +1,21 @@
 {
-    "compilerOptions": {
-        "declaration": true,
-        "esModuleInterop": true,
-        "module": "nodenext",
-        "noImplicitAny": true,
-        "outDir": "./dist",
-        "strict": true,
-        "target": "es2020",
-        "allowSyntheticDefaultImports": true,
-        "verbatimModuleSyntax": true
-    },
-    "exclude": [
-        "node_modules",
-        "src/__tests__/*"
-    ],
-    "include": [
-        "src/**/*"
-    ]
+  "compilerOptions": {
+    "declaration": true,
+    "esModuleInterop": true,
+    "module": "nodenext",
+    "noImplicitAny": true,
+    "outDir": "./dist",
+    "strict": true,
+    "target": "es2020",
+    "allowSyntheticDefaultImports": true,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true
+  },
+  "exclude": [
+    "node_modules",
+    "src/__tests__/*"
+  ],
+  "include": [
+    "src/**/*"
+  ]
 }
