@@ -1,9 +1,10 @@
 import type { FasterEmail } from "./FasterEmail.js";
 import type { IPSTMessage } from "./IPSTMessage.js";
+import type { IPSTObject } from "./IPSTObject.js";
 import type { GetFasterEmailListOptions } from "./PSTFolder.class.js";
 import type { PUNode } from "./PUNode.js";
 
-export interface IPSTFolder {
+export interface IPSTFolder extends IPSTObject {
   /**
    * Get folders in one fell swoop, since there's not usually thousands of them.
    */

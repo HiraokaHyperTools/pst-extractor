@@ -1,4 +1,6 @@
-export interface IPSTAppointment {
+import type { IPSTMessage } from "./IPSTMessage.js";
+
+export interface IPSTAppointment extends IPSTMessage {
   /**
    * Specifies if a meeting request should be sent as an iCal message.
    * https://msdn.microsoft.com/en-us/library/office/cc839802.aspx

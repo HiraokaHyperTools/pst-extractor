@@ -1,8 +1,9 @@
 import type { IPSTAttachment } from "./IPSTAttachment.js";
+import type { IPSTObject } from "./IPSTObject.js";
 import type { IPSTRecipient } from "./IPSTRecipient.js";
 import type { PUSubNode } from "./PUSubNode.js";
 
-export interface IPSTMessage {
+export interface IPSTMessage extends IPSTObject {
   /**
    * The message is marked as having been read.
    * https://msdn.microsoft.com/en-us/library/ee160304(v=exchg.80).aspx

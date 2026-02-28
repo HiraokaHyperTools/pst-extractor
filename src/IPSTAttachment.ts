@@ -1,6 +1,7 @@
 import type { IPSTMessage } from "./IPSTMessage.js";
+import type { IPSTObject } from "./IPSTObject.js";
 
-export interface IPSTAttachment {
+export interface IPSTAttachment extends IPSTObject {
   /**
    * The PR_ATTACH_SIZE property contains the sum, in bytes, of the sizes of all properties on an attachment.
    * https://msdn.microsoft.com/en-us/library/gg156074(v=winembedded.70).aspx

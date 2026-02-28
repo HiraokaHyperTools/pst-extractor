@@ -328,7 +328,6 @@ export class PSTMessage extends PSTObject implements IPSTMessage {
    * Contains the Rich Text Format (RTF) version of the message text, usually in compressed form.
    * https://technet.microsoft.com/en-us/library/cc815911
    * @readonly
-   * @type {string}
    */
   public get bodyRTF(): string {
     const item = this._propertyFinder.findByKey(0x1009);
@@ -338,7 +337,11 @@ export class PSTMessage extends PSTObject implements IPSTMessage {
       && item.value instanceof ArrayBuffer
       && item.value.byteLength >= 1
     ) {
-      return LZFu.decode(Buffer.from(item.value));
+      return this._rootProvider.convertAnsiStringImmediately(
+        LZFu.decode(
+          new Uint8Array(item.value)
+        )
+      );
     }
     return ''
   }
@@ -726,9 +729,8 @@ export class PSTMessage extends PSTObject implements IPSTMessage {
    * Contains the search key for the messaging user represented by the sender.
    * https://msdn.microsoft.com/en-us/magazine/cc842068.aspx
    * @readonly
-   * @type {Buffer}
    */
-  public get pidTagSentRepresentingSearchKey(): Buffer | null {
+  public get pidTagSentRepresentingSearchKey(): Uint8Array | null {
     return this.getBinaryItem(OutlookProperties.PR_SENT_REPRESENTING_SEARCH_KEY)
   }
 
@@ -858,7 +860,6 @@ export class PSTMessage extends PSTObject implements IPSTMessage {
    * Contains TRUE if a message sender requests a reply from a recipient.
    * https://msdn.microsoft.com/en-us/library/office/cc815286.aspx
    * @readonly
-   * @type {boolean}
    */
   public get isReplyRequested(): boolean {
     return this.getIntItem(OutlookProperties.PR_REPLY_REQUESTED) != 0
@@ -868,9 +869,8 @@ export class PSTMessage extends PSTObject implements IPSTMessage {
    * Contains the message sender's entry identifier.
    * https://msdn.microsoft.com/en-us/library/office/cc815625.aspx
    * @readonly
-   * @type {Buffer}
    */
-  public get senderEntryId(): Buffer | null {
+  public get senderEntryId(): Uint8Array | null {
     return this.getBinaryItem(OutlookProperties.PR_SENDER_ENTRYID)
   }
 
@@ -1168,7 +1168,6 @@ export class PSTMessage extends PSTObject implements IPSTMessage {
   /**
    * Color categories
    * @readonly
-   * @type {string[]}
    */
   public get colorCategories(): string[] {
     const keywordCategory: number = this._rootProvider.getStringToIdMapItem(
@@ -1185,7 +1184,7 @@ export class PSTMessage extends PSTObject implements IPSTMessage {
       try {
         if (data.byteLength !== 0) {
           const view = new DataView(data);
-          const dataBuffer = Buffer.from(data);
+          const dataBuffer = new Uint8Array(data);
           const categoryCount: number = view.getUint8(0);
           if (categoryCount > 0) {
             const categories: string[] = []
@@ -1197,17 +1196,17 @@ export class PSTMessage extends PSTObject implements IPSTMessage {
               const start = offsets[x]
               const end = offsets[x + 1]
               const length = end - start
-              const buf: Buffer = Buffer.alloc(length)
+              const buf: Uint8Array = new Uint8Array(length)
               PSTUtil.arraycopy(dataBuffer, start, buf, 0, length)
-              const name: string = buf.toString()
+              const name: string = this._rootProvider.convertAnsiStringImmediately(buf);
               categories[x] = name
             }
             const start = offsets[offsets.length - 1]
             const end = data.byteLength
             const length = end - start
-            const buf: Buffer = Buffer.alloc(length)
+            const buf: Uint8Array = new Uint8Array(length)
             PSTUtil.arraycopy(dataBuffer, start, buf, 0, length)
-            const name: string = buf.toString()
+            const name: string = this._rootProvider.convertAnsiStringImmediately(buf);
             categories[categories.length - 1] = name
           }
         }
@@ -1225,9 +1224,8 @@ export class PSTMessage extends PSTObject implements IPSTMessage {
    * Contains a computed value derived from other conversation-related properties.
    * https://msdn.microsoft.com/en-us/library/ee204279(v=exchg.80).aspx
    * @readonly
-   * @type {Buffer}
    */
-  public get conversationId(): Buffer | null {
+  public get conversationId(): Uint8Array | null {
     return this.getBinaryItem(OutlookProperties.PidTagConversationId)
   }
 

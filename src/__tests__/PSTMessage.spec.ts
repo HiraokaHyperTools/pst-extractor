@@ -1,10 +1,10 @@
+import type { IPSTFile } from '../IPSTFile.js';
+import type { IPSTFolder } from '../IPSTFolder.js';
+import type { IPSTMessage } from '../IPSTMessage.js';
 import { openPstFile } from '../openPstFile.js';
-import { PSTFile } from '../PSTFile.class.js';
-import { PSTFolder } from '../PSTFolder.class.js';
-import { PSTMessage } from '../PSTMessage.class.js';
 import { resolve } from 'path';
-let pstFile: PSTFile
-let childFolders: PSTFolder[]
+let pstFile: IPSTFile
+let childFolders: IPSTFolder[]
 
 beforeAll(async () => {
   pstFile = await openPstFile(resolve('./src/__tests__/testdata/enron.pst'))
@@ -51,7 +51,7 @@ describe('PSTMessage tests', () => {
     expect(childFolders[0].displayName).toEqual('TW-Commercial Group')
     const comGroupFolder = childFolders[0]
 
-    let msg: PSTMessage = (await comGroupFolder.getEmail(0))
+    let msg: IPSTMessage = (await comGroupFolder.getEmail(0))
     // Log.debug1(JSON.stringify(msg, null, 2));
     expect(msg.messageClass).toEqual('IPM.Note')
     expect(msg.subject).toEqual("New OBA's")
@@ -165,7 +165,7 @@ describe('PSTMessage tests', () => {
     expect(msg.bodyHTML).toEqual('')
     expect(msg.senderEntryId).toBeTruthy()
     if (msg.senderEntryId) {
-      expect(msg.senderEntryId.toString()).toContain('JReames@br-inc.com')
+      expect(Buffer.from(msg.senderEntryId).toString()).toContain('JReames@br-inc.com')
     }
   })
 
@@ -184,7 +184,7 @@ describe('PSTMessage tests', () => {
     expect(childFolders[3].displayName).toEqual('Personal')
     const personalFolder = childFolders[3]
 
-    const msg: PSTMessage = (await personalFolder.getEmail(0))
+    const msg: IPSTMessage = (await personalFolder.getEmail(0))
     // Log.debug1(JSON.stringify(msg, null, 2));
     expect(msg.messageClass).toEqual('IPM.Note')
     expect(msg.subject).toEqual(
@@ -197,7 +197,7 @@ it('access to PUSubNode', async () => {
   expect(childFolders[0].displayName).toEqual('TW-Commercial Group')
   const comGroupFolder = childFolders[0]
 
-  const msg: PSTMessage = (await comGroupFolder.getEmail(0))
+  const msg: IPSTMessage = (await comGroupFolder.getEmail(0))
 
   const userSubNode = (await msg.requestAccessToUserSubNode())!
   {

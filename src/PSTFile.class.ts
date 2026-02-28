@@ -110,6 +110,8 @@ export class PSTFile implements IPSTFile {
   // node tree maps
   private _nodeMap: NodeMap = new NodeMap();
 
+  private _convertAnsiStringImmediately: (data: Uint8Array) => string;
+
   /**
    * Creates an instance of PSTFile.  File is opened in constructor.
    * @internal
@@ -120,17 +122,18 @@ export class PSTFile implements IPSTFile {
     nodeMap: NodeMap,
     opts?: PSTOpts
   ) {
-    const convertAnsiString = (opts && opts.convertAnsiString)
-      || PSTUtil.createConvertAnsiString(
+    const convertAnsiStringImmediately = (opts && opts.convertAnsiStringImmediately)
+      || PSTUtil.createConvertAnsiStringImm(
         (opts && opts.ansiEncoding) || "latin1"
       );
     this._nodeMap = nodeMap;
     this._store = store;
     this._resolver = new PropertyValueResolverV1(
-      convertAnsiString,
+      convertAnsiStringImmediately,
       opts?.provideTypeConverterOf,
       opts?.provideFallbackTypeConverterOf
     );
+    this._convertAnsiStringImmediately = convertAnsiStringImmediately;
   }
 
   /**
@@ -264,6 +267,7 @@ export class PSTFile implements IPSTFile {
       getItemOf: this.getItemOf.bind(this),
       getFolderOf: this.getFolderOf.bind(this),
       getStringToIdMapItem: this.getPublicStringToIdMapItem.bind(this),
+      convertAnsiStringImmediately: this._convertAnsiStringImmediately.bind(this),
     } as RootProvider
   }
 

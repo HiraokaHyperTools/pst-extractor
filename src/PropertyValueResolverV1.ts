@@ -32,7 +32,7 @@ export interface PrimitiveTypeConverterArg {
   /**
    * Convert ansiString to unicode string.
    */
-  convertAnsiString: (data: Uint8Array) => Promise<string>;
+  convertAnsiStringImmediately: (data: Uint8Array) => string;
 }
 
 /**
@@ -49,7 +49,7 @@ export interface PrimitiveTypeConverterArg {
  *   const heap = arg.view.getUint32(0, true);
  *   const bytes = await arg.resolveHeap(heap);
  *   return (bytes !== undefined)
- *     ? await arg.convertAnsiString(new Uint8Array(bytes))
+ *     ? arg.convertAnsiString(new Uint8Array(bytes))
  *     : undefined;
  * }
  * ```
@@ -127,14 +127,14 @@ typeConverters[PT_STRING8] = async (arg) => {
   const heap = arg.view.getUint32(0, true);
   const bytes = await arg.resolveHeap(heap);
   return (bytes !== undefined)
-    ? await arg.convertAnsiString(new Uint8Array(bytes))
+    ? arg.convertAnsiStringImmediately(new Uint8Array(bytes))
     : undefined;
 };
 typeConverters[PT_UNICODE] = async (arg) => {
   const heap = arg.view.getUint32(0, true);
   const bytes = await arg.resolveHeap(heap);
   return (bytes !== undefined)
-    ? Buffer.from(bytes).toString('utf16le').replace(/\0/g, '')
+    ? PSTUtil.decodeUtf16leString(new Uint8Array(bytes)).replace(/\0/g, '')
     : undefined;
   // `.replace(/\0/g, '')` is needed to eliminate a trailing null char.
 };
@@ -176,7 +176,7 @@ typeConverters[PT_MV_UNICODE] = async (arg) => {
         const elementBytes = bytes.slice(from, to);
 
         list.push(
-          Buffer.from(elementBytes).toString('utf16le').replace(/\0/g, '')
+          PSTUtil.decodeUtf16leString(new Uint8Array(elementBytes)).replace(/\0/g, '')
         )
       }
     }
@@ -265,7 +265,7 @@ typeConverters[PT_MV_STRING8] = async (arg) => {
         const to = view.getUint32(4 + 4 * (x + 1), true);
 
         list.push(
-          await arg.convertAnsiString(new Uint8Array(bytes, from, to - from))
+          await arg.convertAnsiStringImmediately(new Uint8Array(bytes, from, to - from))
         )
       }
     }
@@ -321,11 +321,11 @@ function mixIntoOne(array: ArrayBuffer[]): ArrayBuffer {
  * @internal
  */
 export class PropertyValueResolverV1 implements PropertyValueResolver {
-  private convertAnsiString: (data: Uint8Array) => Promise<string>;
+  private convertAnsiString: (data: Uint8Array) => string;
   private provideTypeConverterOf: ((type: number) => PrimitiveTypeConverter | undefined);
 
   constructor(
-    convertAnsiString: (data: Uint8Array) => Promise<string>,
+    convertAnsiString: (data: Uint8Array) => string,
     provideTypeConverterOf?: (type: number) => PrimitiveTypeConverter | undefined,
     provideFallbackTypeConverterOf?: (type: number) => PrimitiveTypeConverter | undefined
   ) {
@@ -388,7 +388,7 @@ export class PropertyValueResolverV1 implements PropertyValueResolver {
           }
         },
         resolveHeap: resolveHeap,
-        convertAnsiString: this.convertAnsiString,
+        convertAnsiStringImmediately: this.convertAnsiString,
       }
     );
   }

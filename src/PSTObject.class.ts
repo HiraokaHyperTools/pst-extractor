@@ -180,15 +180,13 @@ export abstract class PSTObject implements IPSTObject {
   /**
    * Get a blob.
    * @protected
-   * @param {number} identifier
-   * @returns {Buffer}
    */
-  protected getBinaryItem(identifier: number): Buffer | null {
+  protected getBinaryItem(identifier: number): Uint8Array | null {
     const property = this._propertyFinder.findByKey(identifier);
     if (property !== undefined) {
       const { value } = property;
       if (value instanceof ArrayBuffer) {
-        return Buffer.from(value);
+        return new Uint8Array(value);
       }
     }
     return null

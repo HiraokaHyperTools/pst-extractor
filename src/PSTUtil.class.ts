@@ -13,6 +13,9 @@ import { createPropertyFinder } from './PAUtil.js';
 import type { PLSubNode } from './PLSubNode.js';
 import type { RootProvider } from './RootProvider.js';
 
+const utf8Encoder = new TextEncoder();
+const utf16Decoder = new TextDecoder('utf-16le');
+
 /**
  * Utility functions for PST components
  * @export
@@ -527,14 +530,9 @@ export class PSTUtil {
 
   /**
    * Convert little endian bytes to long
-   * @static
-   * @param {Buffer} data
-   * @param {number} [start]
-   * @param {number} [end]
-   * @returns {long}
    */
   public static convertLittleEndianBytesToLong(
-    data: Buffer,
+    data: Uint8Array,
     start?: number,
     end?: number
   ): Long {
@@ -558,14 +556,9 @@ export class PSTUtil {
 
   /**
    * Convert big endian bytes to long
-   * @static
-   * @param {Buffer} data
-   * @param {number} [start]
-   * @param {number} [end]
-   * @returns {long}
    */
   public static convertBigEndianBytesToLong(
-    data: Buffer,
+    data: Uint8Array,
     start?: number,
     end?: number
   ): Long {
@@ -588,9 +581,6 @@ export class PSTUtil {
 
   /**
    * Handle strings using codepages.
-   * @static
-   * @param {number} propertyId
-   * @returns
    */
   public static getInternetCodePageCharset(
     propertyId: number
@@ -600,17 +590,11 @@ export class PSTUtil {
 
   /**
    * Copy from one array to another
-   * @static
-   * @param {Buffer} src
-   * @param {number} srcPos
-   * @param {Buffer} dest
-   * @param {number} destPos
-   * @param {number} length
    */
   public static arraycopy(
-    src: Buffer,
+    src: Uint8Array,
     srcPos: number,
-    dest: Buffer,
+    dest: Uint8Array,
     destPos: number,
     length: number
   ): void {
@@ -634,11 +618,8 @@ export class PSTUtil {
 
   /**
    * Decode a lump of data that has been encrypted with the compressible encryption
-   * @static
-   * @param {Buffer} data
-   * @returns {Buffer}
    */
-  public static decode(data: Buffer): Buffer {
+  public static decode(data: Uint8Array): Uint8Array {
     let temp
     for (let x = 0; x < data.length; x++) {
       temp = data[x] & 0xff
@@ -650,9 +631,6 @@ export class PSTUtil {
 
   /**
    * Decode a lump of data that has been encrypted with the compressible encryption
-   * @static
-   * @param {Buffer} data
-   * @returns {Buffer}
    */
   public static decodeArray(data: Uint8Array): Uint8Array {
     let temp
@@ -900,5 +878,20 @@ export class PSTUtil {
     return async (data: Uint8Array): Promise<string> => {
       return decoder.decode(data);
     }
+  }
+
+  public static createConvertAnsiStringImm(encoding: string): ((data: Uint8Array) => string) {
+    const decoder = new TextDecoder(encoding);
+    return (data: Uint8Array): string => {
+      return decoder.decode(data);
+    }
+  }
+
+  public static encodeUtf8String(str: string): Uint8Array {
+    return utf8Encoder.encode(str);
+  }
+
+  public static decodeUtf16leString(data: Uint8Array): string {
+    return utf16Decoder.decode(data);
   }
 }

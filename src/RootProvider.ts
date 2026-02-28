@@ -13,4 +13,5 @@ export interface RootProvider {
   getStringToIdMapItem(key: string): number;
   getItemOf(node: PLNode, subNode: PLSubNode): Promise<PSTMessage>;
   getFolderOf(node: PLNode): Promise<PSTFolder>;
+  convertAnsiStringImmediately(data: Uint8Array): string;
 }

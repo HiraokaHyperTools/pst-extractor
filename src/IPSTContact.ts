@@ -1,4 +1,6 @@
-export interface IPSTContact {
+import type { IPSTMessage } from "./IPSTMessage.js";
+
+export interface IPSTContact extends IPSTMessage {
   /**
    * Contains the recipient's account name.
    * https://msdn.microsoft.com/en-us/library/office/cc842401.aspx

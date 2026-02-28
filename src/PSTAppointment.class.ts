@@ -249,9 +249,8 @@ export class PSTAppointment extends PSTMessage implements IPSTAppointment {
    * Specifies the dates and times when a recurring series occurs by using one of the recurrence patterns and ranges that are specified in [MS-OXOCAL].
    * https://msdn.microsoft.com/en-us/library/office/cc842017.aspx
    * @readonly
-   * @type {Buffer}
    */
-  public get recurrenceStructure(): Buffer | null {
+  public get recurrenceStructure(): Uint8Array | null {
     return this.getBinaryItem(
       this._rootProvider.getNameToIdMapItem(
         OutlookProperties.PidLidAppointmentRecur,
@@ -264,9 +263,8 @@ export class PSTAppointment extends PSTMessage implements IPSTAppointment {
    * Contains a stream that maps to the persisted format of a TZREG structure, which describes the time zone to be used for the start and end time of a recurring appointment or meeting request.
    * https://msdn.microsoft.com/en-us/library/office/cc815376.aspx
    * @readonly
-   * @type {Buffer}
    */
-  public get timezone(): Buffer | null {
+  public get timezone(): Uint8Array | null {
     return this.getBinaryItem(
       this._rootProvider.getNameToIdMapItem(
         OutlookProperties.PidLidTimeZoneStruct,

@@ -7,11 +7,8 @@ export class LZFu {
 
   /**
    * Decompress the buffer of RTF content using LZ
-   * @static
-   * @param {Buffer} data
-   * @returns {string}
    */
-  public static decode(data: Buffer): string {
+  public static decode(data: Uint8Array): Uint8Array {
     // const compressedSize: number = PSTUtil.convertLittleEndianBytesToLong(
     //   data,
     //   0,
@@ -36,12 +33,12 @@ export class LZFu {
 
     if (compressionSig == 0x75465a4c) {
       // we are compressed...
-      const output: Buffer = Buffer.alloc(uncompressedSize)
+      const output: Uint8Array = new Uint8Array(uncompressedSize)
       let outputPosition = 0
-      const lzBuffer: Buffer = Buffer.alloc(4096)
+      const lzBuffer: Uint8Array = new Uint8Array(4096)
       // preload our buffer.
       try {
-        const bytes: Buffer = Buffer.from(LZFu.LZFU_HEADER) //getBytes("US-ASCII");
+        const bytes: Uint8Array = PSTUtil.encodeUtf8String(LZFu.LZFU_HEADER)
         PSTUtil.arraycopy(bytes, 0, lzBuffer, 0, LZFu.LZFU_HEADER.length)
       } catch (err) {
         console.error('LZFu::decode cant preload buffer\n' + err)
@@ -99,15 +96,15 @@ export class LZFu {
       if (outputPosition != uncompressedSize) {
         throw new Error('LZFu::constructor decode Error decompressing RTF')
       }
-      return new String(output).trim()
+      return output
     } else if (compressionSig == 0x414c454d) {
       // we are not compressed!
       // just return the rest of the contents as a string
-      const output: Buffer = Buffer.alloc(data.length - 16)
+      const output: Uint8Array = new Uint8Array(data.length - 16)
       PSTUtil.arraycopy(data, 16, output, 0, data.length - 16)
-      return new String(output).trim()
+      return output
     }
 
-    return ''
+    return new Uint8Array(0)
   }
 }

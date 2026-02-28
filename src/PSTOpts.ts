@@ -23,7 +23,7 @@ export interface PSTOpts {
   /**
    * Otherwise, you can provide your own converter (from ansiString to unicode string).
    */
-  convertAnsiString?: (data: Uint8Array) => Promise<string>;
+  convertAnsiStringImmediately?: (data: Uint8Array) => string;
 
   /**
    * Provide your own optional type converter.

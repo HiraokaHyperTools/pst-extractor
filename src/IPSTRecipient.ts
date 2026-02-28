@@ -1,4 +1,6 @@
-export interface IPSTRecipient {
+import type { IPSTObject } from "./IPSTObject.js";
+
+export interface IPSTRecipient extends IPSTObject {
   /**
    * Contains the recipient type for a message recipient.
    * https://msdn.microsoft.com/en-us/library/office/cc839620.aspx

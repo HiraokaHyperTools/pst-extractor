@@ -1,6 +1,7 @@
+import type { IPSTMessage } from "./IPSTMessage.js";
 import type { IRecurrencePattern } from "./IRecurrencePattern.js";
 
-export interface IPSTTask {
+export interface IPSTTask extends IPSTMessage {
   /**
    * Specifies the status of the user's progress on the task.
    * https://msdn.microsoft.com/en-us/library/office/cc842120.aspx

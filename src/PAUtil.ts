@@ -107,7 +107,7 @@ export async function processNameToIDMap(
     stringMapEntries
   );
   const stringNameToIdByteView = new DataView(stringMapEntries);
-  const stringNameToIdByteBuffer = Buffer.from(stringMapEntries);
+  const stringNameToIdByteBuffer = new Uint8Array(stringMapEntries);
 
   const nodeMap = new NodeMap();
 
@@ -141,7 +141,7 @@ export async function processNameToIDMap(
       // identifier is a string
       // key is byte offset into the String stream in which the string name of the property is stored.
       const len = stringNameToIdByteView.getUint32(key, true);
-      const keyByteValue = Buffer.alloc(len)
+      const keyByteValue = new Uint8Array(len);
       PSTUtil.arraycopy(
         stringNameToIdByteBuffer,
         key + 4,
@@ -151,7 +151,7 @@ export async function processNameToIDMap(
       )
       propId += 0x8000
       nodeMap.setId(
-        keyByteValue.toString('utf16le').replace(/\0/g, ''),
+        PSTUtil.decodeUtf16leString(keyByteValue).replace(/\0/g, ''),
         propId
       )
     }

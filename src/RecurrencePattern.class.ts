@@ -60,7 +60,10 @@ export class RecurrencePattern implements IRecurrencePattern {
   public startDate: Date
   public endDate: Date
 
-  constructor(private buffer: Buffer) {
+  private _view: DataView<ArrayBufferLike>
+
+  constructor(buffer: Uint8Array) {
+    this._view = new DataView(buffer.buffer, buffer.byteOffset, buffer.byteLength);
     const bufferEnd = buffer.length
     let patternTypeOffset = 0
 
@@ -109,9 +112,9 @@ export class RecurrencePattern implements IRecurrencePattern {
   private readInt(offset: number, size: 1 | 2) {
     switch (size) {
       case 1:
-        return this.buffer.readInt16LE(offset)
+        return this._view.getUint16(offset, true)
       case 2:
-        return this.buffer.readInt32LE(offset)
+        return this._view.getUint32(offset, true)
     }
   }
 
@@ -122,14 +125,14 @@ export class RecurrencePattern implements IRecurrencePattern {
       case PatternType.Day:
         return null
       case PatternType.Week:
-        return readWeekByte(this.buffer.readInt8(OFFSETS.PatternTypeSpecific))
+        return readWeekByte(this._view.getUint8(OFFSETS.PatternTypeSpecific))
       case PatternType.Month:
       case PatternType.MonthEnd:
         return this.readInt(OFFSETS.PatternTypeSpecific, 2)
       case PatternType.MonthNth:
         return {
           weekdays: readWeekByte(
-            this.buffer.readInt8(OFFSETS.PatternTypeSpecific)
+            this._view.getUint8(OFFSETS.PatternTypeSpecific)
           ),
           nth: this.readInt(OFFSETS.PatternTypeSpecific + 4, 2),
         }

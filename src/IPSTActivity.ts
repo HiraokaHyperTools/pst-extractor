@@ -1,4 +1,6 @@
-export interface IPSTActivity {
+import type { IPSTMessage } from "./IPSTMessage.js";
+
+export interface IPSTActivity extends IPSTMessage {
   /**
    * Contains the display name of the journaling application (for example, "MSWord"), and is typically a free-form attribute of a journal message, usually a string.
    * https://msdn.microsoft.com/en-us/library/office/cc839662.aspx

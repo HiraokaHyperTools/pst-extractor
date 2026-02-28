@@ -52,13 +52,13 @@ export async function openPst(
 ): Promise<IPSTFile> {
   const lowPst = await openLowPst(api);
 
-  const convertAnsiString = (opts && opts.convertAnsiString)
-    || PSTUtil.createConvertAnsiString(
+  const convertAnsiStringImmediately = (opts && opts.convertAnsiStringImmediately)
+    || PSTUtil.createConvertAnsiStringImm(
       (opts && opts.ansiEncoding) || "latin1"
     );
 
   const resolver = new PropertyValueResolverV1(
-    convertAnsiString,
+    convertAnsiStringImmediately,
     opts?.provideTypeConverterOf,
     opts?.provideFallbackTypeConverterOf
   );
