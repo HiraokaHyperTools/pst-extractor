@@ -29,10 +29,9 @@ const pstFile = await openPstFile(
 ## Open .PST (.OST) file on web browser
 
 ```ts
-import { openPst, PSTFile } from '@hiraokahypertools/pst-extractor';
+import { openPst, type IPSTFile } from '@hiraokahypertools/pst-extractor';
 
-async function openPstWithFile(file: File): Promise<PSTFile>
-{
+async function openPstWithFile(file: File): Promise<IPSTFile> {
   return await openPst(
     {
       readFile: async (buffer: ArrayBuffer, offset: number, length: number, position: number): Promise<number> => {
@@ -54,52 +53,51 @@ async function openPstWithFile(file: File): Promise<PSTFile>
 ## Traversal the entire .PST (.OST) file
 
 ```ts
-import { Consts, openPst, PSTAttachment, PSTFile, PSTFolder } from '@hiraokahypertools/pst-extractor';
+import { Consts, PSTAttachment, type IPSTFolder } from '@hiraokahypertools/pst-extractor';
 
-async function traverseFolder(folder: PSTFolder)
-{
-  console.log(folder.displayName);
+async function traverseFolder(folder: IPSTFolder) {
+    console.log(folder.displayName);
 
-  const messages = await folder.getEmails();
-  for (const message of messages) {
-    console.log(message.messageClass, message.displayName);
+    const messages = await folder.getEmails();
+    for (const message of messages) {
+        console.log(message.messageClass, message.displayName);
 
-    const recipients = await message.getRecipients();
-    for (const recipient of recipients) {
-      if (recipient.recipientType == Consts.MAPI_TO) { }
-      if (recipient.recipientType == Consts.MAPI_CC) { }
-      if (recipient.recipientType == Consts.MAPI_BCC) { }
+        const recipients = await message.getRecipients();
+        for (const recipient of recipients) {
+            if (recipient.recipientType == Consts.MAPI_TO) { }
+            if (recipient.recipientType == Consts.MAPI_CC) { }
+            if (recipient.recipientType == Consts.MAPI_BCC) { }
 
-      console.log(
-        recipient.addrType, // "EX", "SMTP"
-        recipient.emailAddress,
-        recipient.displayName
-      );
+            console.log(
+                recipient.addrType, // "EX", "SMTP"
+                recipient.emailAddress,
+                recipient.displayName
+            );
+        }
+
+        const attachments = await message.getAttachments();
+        for (const att of attachments) {
+            console.log(
+                att.attachMethod,
+                att.displayName,
+                att.filename
+            );
+
+            if (att.attachMethod === PSTAttachment.ATTACHMENT_METHOD_BY_VALUE) {
+                console.log(att.fileData);
+            }
+
+            if (att.attachMethod === PSTAttachment.ATTACHMENT_METHOD_EMBEDDED) {
+                const embeddedMessage = await att.getEmbeddedPSTMessage();
+                console.log(embeddedMessage);
+            }
+        }
     }
 
-    const attachments = await message.getAttachments();
-    for (const att of attachments) {
-      console.log(
-        att.attachMethod,
-        att.displayName,
-        att.filename
-      );
-
-      if (att.attachMethod === PSTAttachment.ATTACHMENT_METHOD_BY_VALUE) {
-        console.log(att.fileData);
-      }
-
-      if (att.attachMethod === PSTAttachment.ATTACHMENT_METHOD_EMBEDDED) {
-        const embeddedMessage = await att.getEmbeddedPSTMessage();
-        console.log(embeddedMessage);
-      }
+    const subFolders = await folder.getSubFolders();
+    for (const subFolder of subFolders) {
+        await traverseFolder(subFolder);
     }
-  }
-
-  const subFolders = await folder.getSubFolders();
-  for (const subFolder of subFolders) {
-    await traverseFolder(subFolder);
-  }
 }
 
 const rootFolder = await pstFile.getRootFolder();
