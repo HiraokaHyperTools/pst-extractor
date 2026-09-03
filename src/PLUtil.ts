@@ -734,6 +734,18 @@ export async function openLowPst(api: ReadFileApi): Promise<PLStore> {
 
   await loadNodeTree(node_btree, node_btree_count, 0x21, Infinity);
 
+  // Index children once so getChildren() below is O(children) instead of
+  // scanning the whole nodeMap on every call.
+  const childrenByParent = new Map<number, NodePtr[]>();
+  for (const node of nodeMap.values()) {
+    let siblings = childrenByParent.get(node.parentNodeId);
+    if (siblings === undefined) {
+      siblings = [];
+      childrenByParent.set(node.parentNodeId, siblings);
+    }
+    siblings.push(node);
+  }
+
   async function loadMainBlockTo(
     blockId: number,
     consumer: (block: BlockPtr) => Promise<void>
@@ -951,8 +963,8 @@ export async function openLowPst(api: ReadFileApi): Promise<PLStore> {
     return {
       nodeId: (ptr.nodeId),
       getParent: () => getOneNodeBy((ptr.parentNodeId)),
-      getChildren: () => Array.from(nodeMap.values())
-        .filter(it => it.parentNodeId === ptr.nodeId && it.nodeId !== ptr.nodeId)
+      getChildren: () => (childrenByParent.get(ptr.nodeId) ?? [])
+        .filter(it => it.nodeId !== ptr.nodeId)
         .map(it => getOneNodeBy(it.nodeId))
         .filter(it => it !== undefined),
       getSubNode: () => getSubNodeOf(ptr.nodeId),
