@@ -1,6 +1,19 @@
 import { KeyedDelay } from "./KeyedDelay.js";
 
 /**
+ * How many items one collection keeps.
+ *
+ * The cache makes reading the same item twice cheap. Unbounded, it also means
+ * a collection holds every item it has ever produced for as long as it is
+ * alive: a folder's message collection lives on the PSTFolder, so walking a
+ * large mailbox once kept every message in memory (about 1.3 GB of parsed
+ * messages for a 2 GB file), which defeats reading a folder incrementally.
+ *
+ * @internal
+ */
+const MAX_CACHED_ITEMS = 64;
+
+/**
  * @internal
  */
 export class CollectionAsyncProvider<T> {
@@ -12,7 +25,7 @@ export class CollectionAsyncProvider<T> {
     count: number,
     itemProvider: (index: number) => Promise<T>
   ) {
-    this._cache = new KeyedDelay<T>();
+    this._cache = new KeyedDelay<T>(MAX_CACHED_ITEMS);
     this._count = count;
     this._itemProvider = itemProvider;
   }
